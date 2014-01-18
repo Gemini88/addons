@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.tubeplus"
+       name="TubePlus"
+       version="1.0.13"
+       provider-name="Jas0npc">
+  <requires>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.urlresolver" version="1.0.3"/>
+        <import addon="script.module.t0mm0.common" version="1.1.0"/>
+		<import addon="script.module.metahandler" version="1.0.1"/>
+		<import addon="script.module.beautifulsoup"/>
+		<import addon="script.module.addon.common" version="2.0.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">TubePlus</summary>
+    <description lang="en">TubePlus.....Official Support....xunitytalk.com. BIG THANKS TO ALL WHOS HELPED, Vin, Mikey1234,Eldorado, UmOuch.[CR]Im truely Sorry If you feel I have let any of you down.[CR][COLOR orange]This addon DOES NOT contain any GA([CR]However it is now apart of the DEV FUND)[/COLOR]</description>
+    <platform>all</platform>
+  </extension>
+</addon>

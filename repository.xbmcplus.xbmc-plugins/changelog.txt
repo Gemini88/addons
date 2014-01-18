@@ -1,0 +1,8 @@
+[B]Version 1.2[/B]
+- fixed issue
+
+[B]Version 1.1[/B]
+- added rollback and datazip
+
+[B]Version 1.0[/B]
+- Initial version

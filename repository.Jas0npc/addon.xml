@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.Jas0npc" name="Jas0n`s REPO" version="1.8" provider-name="Jas0n`s">
+	<extension point="xbmc.addon.repository" name="Jas0n`s Addon Repository">
+        <info compressed="false">https://bitbucket.org/jas0npc_13/jas0npc-repo/raw/master/addons.xml</info>
+		<checksum>https://bitbucket.org/jas0npc_13/jas0npc-repo/raw/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://bitbucket.org/jas0npc_13/jas0npc-repo/raw/master/zips</datadir>
+    </extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Install MY Addons</summary>
+		<description>Download and install addons from Jas0n`s Repo, DONT FORGET TO COME TO xunitytalk.com .For OFFICIAL !! Support </description>
+		<platform>all</platform>
+	</extension>
+</addon>

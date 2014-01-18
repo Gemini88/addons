@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.xbmcplus.xbmc-plugins" name="xbmcplus Add-on Repository" version="1.2" provider-name="moneymaker">
+	<extension point="xbmc.addon.repository" name="xbmcplus Add-on Repository">
+		<info compressed="false">http://home.no/xbmcplus/fusion/plugins/addons.xml</info>
+		<checksum>http://home.no/xbmcplus/fusion/plugins/addons.xml.md5</checksum>
+		<datadir zip="true">http://home.no/xbmcplus/fusion/plugins</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Install Add-ons from xbmcplus Repository</summary>
+		<description>Add-ons for XBMC</description>
+		<disclaimer>by moneymaker</disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>

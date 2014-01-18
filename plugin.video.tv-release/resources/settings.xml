@@ -1,0 +1,4 @@
+<settings>
+	<setting id="usemeta" type="bool" label="[COLOR blue][B]Enable Metadata[/COLOR][/B]" default="true"/>
+	<setting id="episode" type="number" label="Episode View" default="503" enable="!eq(false)"/>
+</settings>

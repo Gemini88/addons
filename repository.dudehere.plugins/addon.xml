@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+	<addon id="repository.dudehere.plugins" name="dudehere addons" version="1.0.2" provider-name="dudehere">
+		<extension point="xbmc.addon.repository" name="dudehere add-on repository">
+			<info compressed="false">https://dudehere-repository.googlecode.com/git/addons/addons.xml</info>
+			<checksum>https://dudehere-repository.googlecode.com/git//addons/addons.xml.md5</checksum>
+			<datadir zip="true">https://dudehere-repository.googlecode.com/git/addons/</datadir>
+		</extension>
+		<extension point="xbmc.addon.metadata">
+			<summary>Install Addons from dudehere</summary>
+			<description>Download and install addons from dudehere.</description>
+			<platform>all</platform>
+		</extension>
+	</addon>
+

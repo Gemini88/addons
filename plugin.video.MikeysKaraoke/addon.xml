@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.MikeysKaraoke" name="Mikey's Karaoke" version="4.6.3" provider-name="Mikey1234">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="plugin.video.youtube"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Play Karaoke Videos</summary>
+    <description lang="en">Search Karaoke Songs.....Official Support....XBMTALK.COM</description>
+    <disclaimer lang="en">By using This Plugin You will receive sometimes an advert which helps funds the developers developing.....we all thank you!!</disclaimer>
+    <platform>all</platform>
+  </extension>
+</addon>

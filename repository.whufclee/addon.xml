@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.whufclee" name="whufclee Addon Repository" version="1.0" provider-name="whufclee">
+	<extension point="xbmc.addon.repository" name="whufclee Addon Repository">
+		<info compressed="false">http://whufclee.googlecode.com/svn/repo/addons.xml</info>
+		<checksum>http://whufclee.googlecode.com/svn/repo/addons.xml.md5</checksum>
+		<datadir zip="false">http://whufclee.googlecode.com/svn/repo</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Addon mods</summary>
+		<description>Currently this repo is hosting modified addons so all credit to the original devs.</description>
+		<platform>all</platform>
+	</extension>
+</addon>

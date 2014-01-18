@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+   <category label="General">
+   <setting id="whistory" type="bool" label="[B]Watch History[/B]" default="true"/>
+    <setting id="auto-view" type="bool" label="[B]Auto View[/B]" default="true"/>
+		<setting id="home-view"	type="enum" label="Main Menu View" values="List|Thumbnail" default="1" enable="!eq(-1,false)"/>
+		<setting id="ga_time" type="text" label="GA Called" default="2000-01-01 00:00:00" visible="false"/>
+		<setting id="visitor_ga" type="text" label="GA visitor" default="" visible="false"/>
+		<setting id="vice-qua"	type="enum" label="[B]MMA-F Bitrate[/B]" values="High|Medium|Low" default="0"/>
+		<setting id="tsn-qua"	type="enum" label="[B]TSN & FOX Bitrate[/B]" values="High|Medium|Low" default="0"/>
+		<setting id="wild-qua"	type="enum" label="[B]Wild Tv Bitrate[/B]" values="High|Low" default="0"/>
+   </category>
+
+</settings>

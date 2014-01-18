@@ -1,0 +1,17 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Valeucara - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.valeucara.com/%s.php?width=650&height=500
+
+item_info_name=url
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*setup\(\{file:\s*"([^'"]+).*','@REFERER@')
+item_info_build=%s
+
+
+
+
+

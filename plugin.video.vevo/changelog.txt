@@ -1,0 +1,8 @@
+0.7.6 - v13.x support, updated fanart and logo
+
+0.7.5 - Fixed german language, clean-up
+
+0.7.4 - Fixed Facebook token size, added german language
+
+0.7.3 - Last initial version () Githubs
+

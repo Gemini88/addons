@@ -1,0 +1,158 @@
+v2
+
+cacheable='1
+verbose 3
+
+# https://www.dropbox.com/s/gn2ehqev0fpdq9b/putlocker.nipl
+
+#Check for pipe and password
+regex='\|(.+$)
+match s_url
+if v1
+	file_pw=v1
+	regex='\|(.+$)
+	replace s_url '
+endif
+
+# Retrieve video id, hash, and PHPSESSID values
+regex='([^#/]+)#?$
+match s_url
+vidid=v1
+
+url_ori=s_url
+
+	regex='value="([^"]+)" name="hash"
+scrape
+hash=v1
+
+regex='(/\?404)$
+match geturl
+if v1
+    # report removed file
+    s_url='http://navix.turner3d.net/cgi-bin/proc_check/putlocker_report.cgi?url=
+    escape url_ori
+    concat s_url url_ori
+    scrape
+    error 'This file does not exist on the server
+endif
+
+debug hash
+
+#Check for a hash
+if hash='
+    error 'Missing Hash for File Access, Most Likely Link Does Not Exist
+    v1='
+endif
+
+#Cookie Setup
+cookieval='usender=
+concat cookieval cookies.usender
+concat cookieval '; ad_cookie1=1; PHPSESSID=
+concat cookieval cookies.PHPSESSID
+concat cookieval '; SERVERID=
+concat cookieval cookies.SERVERID
+
+# "Click" the "Continue as Free User" button
+s_cookie=cookieval
+s_referer=url_ori
+s_method='post
+s_postdata='confirm=Continue%20as%20Free%20User&hash=
+concat s_postdata hash
+regex='get_file\.php\?([^=]+=)([^']+)
+scrape
+
+if file_pw
+	s_cookie=cookieval
+	s_referer=url_ori
+	s_method='post
+	s_postdata='file_password=
+	concat s_postdata file_pw
+	regex='get_file\.php\?([^=]+=)([^']+)
+	scrape
+endif
+
+# print htmRaw
+
+# # Get the Stream ID
+# s_cookie=cookieval
+# s_referer=url_ori
+# s_url=url_ori
+# s_method='get
+# regex='get_file\.php\?([^=]+=)([^']+)
+# scrape
+# 
+# debug cookieval
+
+typeid=v1
+streamid=v2
+
+
+debug typeid
+debug streamid
+
+
+#check for a download link
+if typeid='download=
+	regex='([^"]+)
+	match streamid
+	downldid=v1
+	s_action=headers
+	s_cookie=cookieval
+	s_referer=url_ori
+	s_url='http://www.putlocker.com/get_file.php?download=
+	concat s_url downldid
+	regex='url="([^"]+)
+	scrape
+	url=geturl
+	regex='\&amp;
+    replace url '&
+	play
+endif
+
+#check for a plain id
+if typeid='id=
+	regex='([^"]+)
+	match streamid
+	plainid=v1
+	s_action=headers
+	s_cookie=cookieval
+	s_referer=url_ori
+	s_url='http://www.putlocker.com/get_file.php?id=
+	concat s_url plainid
+	scrape
+	url=geturl
+	regex='\&amp;
+    replace url '&
+	play
+endif
+if typeid='stream=
+# Pull final media URL from XML
+	s_method='get
+	s_cookie=cookieval
+	s_referer=url_ori
+	s_url='http://www.putlocker.com/get_file.php?stream=
+	concat s_url streamid
+	regex='url="([^"]+)
+	scrape
+endif
+
+print htmRaw
+
+if v1
+    url=v1
+    regex='\&amp;
+    replace url '&
+    play
+endif
+regex='(This file failed to convert)
+match htmRaw
+if v1
+	error 'Site Reports This file failed to convert
+endif
+regex='(This file requires a password.)
+match htmRaw
+if v1
+	error 'This file requires a password.
+endif
+print htmRaw
+error 'Could not retrieve source

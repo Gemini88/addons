@@ -1,0 +1,192 @@
+<script>
+
+try{
+if(window.top==window)window.top.location.href='http://www.teledunet.com';
+else
+if(parent.location.href.indexOf('http://www.teledunet.com')!==0)
+parent.location.href='http://www.teledunet.com';
+}
+catch(err){
+window.top.location.href='http://www.teledunet.com';
+//window.resizeTo(1024,500);
+}
+
+</script>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>AD Player</title>
+<LINK REL="SHORTCUT ICON" HREF="images/play.png">
+<meta name="DESCRIPTION" content="Diffusion Gratuite - Live Streaming - Tv en ligne - Webcam - Média - Mp3 - Flv - Mp4 ... ">
+<meta NAME="KEYWORDS" CONTENT="Tv,live,streaming,chaine,camera,webcam,diffusion">
+<meta property=og:image content=""/>
+</head>
+<body style="margin:0px;overflow:auto;overflow-x:hidden;overflow-y:auto;" >
+<table align=center style="position:absolute;top:0px;width:100%;height:100%;border-top:0px solid ;background:#000000" cellpadding=0 cellspacing=0>
+
+
+
+
+
+<tr >
+<td colspan=5 id=mediaplayer height=100% style="background:url(images/bg.png0) no-repeat;background-position:50% 50%;background-size:200px auto;">
+
+&nbsp;
+</td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+
+
+<tr>
+<td align=center height="16">
+<div id=media_info style="position:absolute;visibility:hidden">
+<img src="images/spacer.gif" width=250 height=1>
+00:00:00 | 00:00:00
+</div>
+<table width=100% height=100%  cellpadding=0 cellspacing=5 style="background:#555555">
+<tr>
+<td>
+<img  width="16" id="play_pause_icone" src="images/play.png" title="Play/Pause" onmouseover="this.style.backgroundColor='#ffffff';" onmouseout="this.style.backgroundColor='';" style="cursor:pointer" onclick="play_pause()">
+</td>
+<td>
+<img width="16" id="stop_icone" src="images/stop.png" onmouseover="this.style.backgroundColor='#ffffff';" title="Stop" onmouseout="this.style.backgroundColor='';" style="visibility:hidden;cursor:pointer" onclick="stop()">
+</td>
+<td width=100% onclick="move_playing_to_selected_pos();" style="visibility:hidden;cursor:pointer;background:#000000;">
+<div  style="position:relative;width:100%;height:0px;">
+<div id="media_scroller" style="height:16px;width:0px;background:url('images/bg_div.png') ;border-right:2px solid #e0e0e0;"></div>
+</div>
+<div id="media_loading" style="height:16px;width:0px;background:#444444;border-right:1px solid #00ee00;font-weight:bold;"></div>
+</td>
+<td>
+<img width="16" id="sound_icone" src="images/sound.png" onmouseover="this.style.backgroundColor='#ffffff';" title="Sound/Mute" onmouseout="this.style.backgroundColor='';" style="cursor:pointer" onclick="sound_mute()">
+</td>
+<td width="100"   onclick="move_volume_to_selected_cursor();" style="min-width:100px;max-width:100px;cursor:pointer;background:#000000;" >
+<div id="volume_scroller" style="height:16px;width:100px;background:url('images/bg_div.png') ;border-right:2px solid #e0e0e0;"></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</table>
+
+
+
+
+<script type='text/javascript' src='jwplayer.js'></script>
+<script>
+port_site='80';
+time_player=8.22824644988E+13;
+time_waiting_load_video='';
+auto_play='1';
+stretching='none';
+channel_name='jsc 1';
+curent_media='rtmp://www.teledunet.com:1935/teledunet/jsc_1';
+parent.curent_media='rtmp://www.teledunet.com:1935/teledunet/jsc_1';
+parent.curent_channel_name=curent_media.substring(curent_media.lastIndexOf('/')+1);
+
+/*try
+{
+parent.document.getElementById('div_channel_info').innerHTML=parent.str_replace(parent.curent_channel_name,'_',' ');
+parent.record_stat_channel=function(obj,name)
+{
+try{
+parent.new_ajax('http://'+parent.document.domain+':'+parent.location.port+'/tv/telestats.php?get_nb_viewer_channel='+name+'&curent_channel='+parent.curent_channel_name+'&id_membre='+parent.id_membre_connected,function(r){
+try{
+obj.innerHTML=r;
+}catch(err){}
+r=r.substring(r.indexOf('value="')+7);
+var nbo=r.substring(0,r.indexOf('"'));
+r=r.substring(r.indexOf('value="')+7);
+var nbt=r.substring(0,r.indexOf('"'));
+parent.document.getElementById('div_channel_info').innerHTML=curent_media;
+parent.document.getElementById('div_channel_info').innerHTML=parent.str_replace(name,'_',' ')+'&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:#00ff00">'+nbo+'</font>&nbsp;&nbsp;<font style="color:#ffffff">'+nbt+'</font>';
+});
+}catch(err){}
+}
+//setInterval(function(){parent.record_stat_channel(parent.document.getElementById('stat_'+parent.curent_channel_name),parent.curent_channel_name);},180000);
+//parent.record_stat_channel(parent.document.getElementById('stat_'+parent.curent_channel_name),parent.curent_channel_name);
+}catch(err){}
+try
+{
+parent.document.getElementById('plugin_tchat').src='http://www.telfazti.com:9999/self_plugins2/?width=400&salon='+parent.curent_channel_name+'&icone='+'http://'+document.domain+'/tv/icones/'+parent.curent_channel_name+'.jpg';
+}catch(err){}
+*/
+
+curent_volume=100;
+width_scroller_volume=100;
+padding_table=5;
+collspan_table=5;
+width_icone=16;
+height_middle_player=336;
+</script>
+<script src="ad_player.js?id=1383131022"></script>
+<script>
+/*---------------------------------------------------------------------------------------*/
+try{
+if(
+auto_play
+&&(curent_media.indexOf('youtube')==-1)
+//&&(curent_media.indexOf('camera:')==-1)&&(curent_media.indexOf('.swf')==-1)
+)
+play(curent_media);
+}catch(err){}
+/*---------------------------------------------------------------------------------------*/
+if(curent_media.indexOf('rtmp://')!=0)
+{
+//setInterval(auto_revise_playing,time_waiting_load*1000);statut_player.innerHTML='Chargement dans 10 secondes ..';
+}
+/*---------------------------------------------------------------------------------------*/
+</script>
+
+
+
+
+<script>
+set_opacity=function(ob,n)
+{
+
+try{
+ob.style.filter='progid:DXImageTransform.Microsoft.Alpha(style=0,opacity='+n+')';
+}catch(err){}
+
+if(ob.style.MozOpacity!=undefined)
+ob.style.MozOpacity=n/100;
+else if(ob.style.filter!=undefined)
+return ob.style.filter='Alpha(opacity='+n+')';
+else
+ob.style.opacity=n/100;
+
+};
+</script>
+<script>
+window.onresize=function(){
+document.getElementById('mediaplayer').height=(get_height_window()-0)+'px';
+};
+document.getElementById('mediaplayer').height=(get_height_window()-0)+'px';
+</script>
+</body>
+</html>

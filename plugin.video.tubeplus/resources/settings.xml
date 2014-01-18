@@ -1,0 +1,8 @@
+<settings>
+<category label="General Settings">
+		<setting id="firstrun" type="bool" label="Warning about Real-Debrid priority" default="true" />
+        <setting id="hoster_warning" type="bool" label="Reminder about REAL-DEBRID priority" default="true" />
+        <setting id="tvwarn" type="bool" label="Warning about tv scraping" default="true" />
+        <setting id="usemeta" type="bool" label="Use MetaData" default="true" />
+</category>
+</settings>
