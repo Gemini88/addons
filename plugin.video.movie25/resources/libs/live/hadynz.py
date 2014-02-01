@@ -11,7 +11,7 @@ addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 addon = Addon('plugin.video.movie25', sys.argv)
 art = main.art
-from universal import watchhistory
+from resources.universal import watchhistory
     
 wh = watchhistory.WatchHistory('plugin.video.movie25')
 
@@ -831,7 +831,8 @@ def MAIN():
     main.GA("Live","ArabicStreams")
     items = _parse_channels_from_html_dom('http://www.teledunet.com/')
     for channels in sorted(items):
-        main.addPlayL(channels['title'],channels['path'],232,channels['thumbnail'],'','','','','')
+        main.addPlayL(channels['title'],channels['path'],232,channels['thumbnail'],'','','','','',secName='Arabic Streams',secIcon=art+'/arabicstream.png')
+
         
 
 def _get_channel_time_player(channel_name):
@@ -869,11 +870,10 @@ def LINK(mname,url,thumb):
         playlist.clear()
         
         listitem = xbmcgui.ListItem(thumbnailImage=thumb)
-        listitem.setInfo('video', {'Title': mname, 'Genre': 'Live'} )
-        
-        playlist.add(stream_url,listitem)
-        xbmcPlayer = xbmc.Player()
-        xbmcPlayer.play(playlist)
+        infoL={'Title': mname, 'Genre': 'Live'} 
+        from resources.universal import playbackengine
+        player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type='movie', title=mname,season='', episode='', year='',img=thumb,infolabels=infoL, watchedCallbackwithParams='',imdb_id='')
+
         #WatchHistory
         if selfAddon.getSetting("whistory") == "true":
             wh.add_item(mname+' '+'[COLOR green]ArabicStreams[/COLOR]', sys.argv[0]+sys.argv[2], infolabels='', img=thumb, fanart='', is_folder=False)

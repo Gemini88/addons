@@ -16,10 +16,10 @@ try:
                 os.remove(cachefile)
                 dialog.ok("[B][COLOR=FF67cc33]Mash Up FIX[/COLOR][/B]", "Thats It All Done", "Please reboot XBMC!(required)")
             else:
-                ok=dialog.ok('[B][COLOR=FF67cc33]Mash Up FIX[/COLOR][/B]','Failed To Fix Database Malformed error','Please report to [COLOR=FF67cc33]Xbmctalk.com[/COLOR].')
+                ok=dialog.ok('[B][COLOR=FF67cc33]Mash Up FIX[/COLOR][/B]','Failed To Fix Database Malformed error','Please report to [COLOR=FF67cc33]MASHUPXBMC.COM[/COLOR].')
 
         
 except:
     dialog = xbmcgui.Dialog()
-    ok=dialog.ok('[B][COLOR=FF67cc33]Mash Up FIX[/COLOR][/B]','Failed To Fix Database Malformed error','Please report to [COLOR=FF67cc33]Xbmctalk.com[/COLOR].')
+    ok=dialog.ok('[B][COLOR=FF67cc33]Mash Up FIX[/COLOR][/B]','Failed To Fix Database Malformed error','Please report to [COLOR=FF67cc33]MASHUPXBMC.COM[/COLOR].')
     pass

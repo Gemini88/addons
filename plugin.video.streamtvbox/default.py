@@ -2,16 +2,21 @@ import urllib,urllib2,sys,re,xbmcplugin,xbmcgui,xbmcaddon,xbmc,os
 import datetime
 import time
 from t0mm0.common.net import Net
+from threading import Timer
+
 import tvguide
 
 PLUGIN='plugin.video.streamtvbox'
 ADDON = xbmcaddon.Addon(id=PLUGIN)
 deletepy = xbmc.translatePath(os.path.join(ADDON.getAddonInfo('path'),ADDON.getSetting('delete')))
 image='http://www.xunitytalk.com/oss/'
-country=os.path.join(ADDON.getAddonInfo('path'),'resources','country')
+
 auth=ADDON.getSetting('authtoken')
 forOffset=tvguide.offset_time()
 forOffset_gmt=tvguide.offset_gmt()
+USER='[COLOR yellow]'+ADDON.getSetting('user')+'[/COLOR]'
+updateid= int(ADDON.getSetting('id'))
+
 
 net=Net()
 
@@ -23,24 +28,33 @@ def OPEN_URL(url):
     return link
 
 
+def EXIT():
+        xbmc.executebuiltin("XBMC.Container.Update(path,replace)")
+        xbmc.executebuiltin("XBMC.ActivateWindow(Home)")
+    
+    
 if ADDON.getSetting('user')=='':
     dialog = xbmcgui.Dialog()
-    dialog.ok("StreamTVBox", "You Now Need To Input", "Your [COLOR yellow]Username[/COLOR]")
-    search_entered = ''
-    keyboard = xbmc.Keyboard(search_entered, 'StreamTVBox')
-    keyboard.doModal()
-    if keyboard.isConfirmed():
-        search_entered = keyboard.getText() 
-    ADDON.setSetting('user',search_entered)
-    
-    dialog.ok("StreamTVBox", "You Now Need To Input", "Your [COLOR yellow]Password[/COLOR]")
-    search_entered = ''
-    keyboard = xbmc.Keyboard(search_entered, 'StreamTVBox')
-    keyboard.doModal()
-    if keyboard.isConfirmed():
-        search_entered = keyboard.getText() 
-    ADDON.setSetting('pass',search_entered)
-    ADDON.setSetting('login_time','2000-01-01 00:00:00')
+    if dialog.yesno("StreamTVBox", "If You Dont Have An Account", "Please Sign Up At","WWW.STREAMTVBOX.COM","Exit","Carry On"):
+        
+        dialog.ok("StreamTVBox", "You Now Need To Input", "Your [COLOR yellow]Username[/COLOR]")
+        search_entered = ''
+        keyboard = xbmc.Keyboard(search_entered, "StreamTVBox")
+        keyboard.doModal()
+        if keyboard.isConfirmed():
+            search_entered = keyboard.getText() 
+        ADDON.setSetting('user',search_entered)
+        
+        dialog.ok("StreamTVBox", "You Now Need To Input", "Your [COLOR yellow]Password[/COLOR]")
+        search_entered = ''
+        keyboard = xbmc.Keyboard(search_entered, "StreamTVBox")
+        keyboard.doModal()
+        if keyboard.isConfirmed():
+            search_entered = keyboard.getText() 
+        ADDON.setSetting('pass',search_entered)
+        ADDON.setSetting('login_time','2000-01-01 00:00:00')
+    else:
+        EXIT()
     
     
 site='http://streamtvbox.com/site/live-tv/'
@@ -49,10 +63,27 @@ site='http://streamtvbox.com/site/live-tv/'
 datapath = xbmc.translatePath(ADDON.getAddonInfo('profile'))
 cookie_path = os.path.join(datapath, 'cookies')
 cookie_jar = os.path.join(cookie_path, "streamtvbox_new.lwp")
-    
+channeljs=os.path.join(cookie_path, "channel.js")
 
+
+
+
+def LOGOUT():
+    net.set_cookies(cookie_jar)
+    html = net.http_GET(site).content
+    match=re.compile('  href="(.+?)">Log Out</a>').findall(html)[0]
+    net.set_cookies(cookie_jar)
+    logout = net.http_GET(match.replace('#038;','')).content
+    if 'You are now logged out' in logout:
+        print '===============LOGGED OUT !!==============='
+        dialog = xbmcgui.Dialog()
+        dialog.ok("StreamTVBox",'', "You Are Now Logged Out", "")
+        EXIT()
+        
+        
+    
 def LOGIN():
-    print '###############    LOGIN TO OSS   #####################'
+    print '###############    LOGIN TO STVB   #####################'
     loginurl = 'http://streamtvbox.com/site/wp-login.php'
     username = ADDON.getSetting('user')
     password = ADDON.getSetting('pass')
@@ -64,36 +95,90 @@ def LOGIN():
                                             'Origin':'http://streamtvbox.com',
                                             'Referer':'http://streamtvbox.com/site/wp-login.php',
                                                     'X-Requested-With':'XMLHttpRequest'}
-    html = net.http_POST(loginurl, data, headers)
-    
+    html = net.http_POST(loginurl, data, headers).content
+    if 'account is already logged in using another ip address' in html:
+        KICKOUT()
+        return
+        
     if os.path.exists(cookie_path) == False:
             os.makedirs(cookie_path)
     net.save_cookies(cookie_jar)
 	
-	    
+	
+        
+def KICKOUT():
+        dialog = xbmcgui.Dialog()
+        dialog.ok("Multiple Logins Using "+USER+" Account", "Please Do Not Share Your Account Details If You Do Not", "Have An Account Please Sign Up To ", "[COLOR yellow]WWW.STREAMTVBOX.COM[/COLOR]")
+        EXIT()
+        ADDON.setSetting('user','')
+        ADDON.setSetting('pass','')
+        ADDON.setSetting('authtoken','')
+        ADDON.setSetting('login_time', '2000-01-01 00:00:00')
+        return
     
 def GRAB_AUTH():
     print '###############     GRAB AUTH     #####################'
     net.set_cookies(cookie_jar)
-    
+  
     html = net.http_GET(site).content
+    
+    if 'account is already logged in using another ip address' in html:
+        KICKOUT()
+        return
     var  = re.findall('urlkey1 = "(.+?)"',html,re.M|re.DOTALL)
     ADDON.setSetting('authtoken',var[0])
     now = datetime.datetime.today()
     ADDON.setSetting('login_time', str(now).split('.')[0])
     
+def downloadchannel():
+    if os.path.exists(cookie_path) == False:
+        os.makedirs(cookie_path)
     
+	
+    import downloader
+    dp = xbmcgui.DialogProgress()
+    dp.create("Grabbing Channel List","Downloading ",'', 'Please Wait')
+    downloader.download('http://offsidestreams.com/site/nl-channels.js', channeljs, dp)
+
     
 def server():
-    return 'http://offsidestreams.com/site/nl-channels.js'
+    if os.path.exists(cookie_path) == False:
+            os.makedirs(cookie_path)
+    if os.path.exists(channeljs) == False:
+        downloadchannel()
+    try:
+        a=open(channeljs).read()
+    except:
+        a=OPEN_URL('http://offsidestreams.com/site/nl-channels.js')      
+    return a
 
+def CheckChannels():
+    update=OPEN_URL('http://mikey1234-repo.googlecode.com/svn/addons/plugin.video.offside/update.txt')
+    id=re.compile('id<(.+?)>').findall(update)[0]
+    if int(id) > updateid:
+        notification=re.compile('<NOT>(.+?)</NOT>.+?line1>(.+?)</line1.+?line2>(.+?)</line2.+?line3>(.+?)</line3>',re.DOTALL).findall(update)
+        for show,line1,line2,line3 in notification:
+            if '%s' in line1:
+                line1=line1%USER
+            if '%s' in line2:    
+                line2=line2%USER
+            if '%s' in line3:    
+                line3=line3%USER
+            if show=='yes':
+                dialog = xbmcgui.Dialog()
+                dialog.ok("StreamTVBox", line1, line2,line3)
+            if 'Download' in line3:
+                downloadchannel()
+        ADDON.setSetting('id',id)
+    
 def CATEGORIES():
-    addDir('[COLOR red]Full Match Replays HD[/COLOR]','url',3,'','','','')
-    link = OPEN_URL(server())
+    CheckChannels()
+    addDir('[COLOR red].Full Match Replays HD[/COLOR]','url',3,'','','','')
+    link = server()
     link = link.split('window.channels =')[1]
     match = re.findall('"title": "(.+?)".+?"file": "(.+?)",',link,re.M|re.DOTALL)
     for _name,url in match:
-        iconimage=image+_name.replace(' ','').replace('-Free','').replace('HD','').replace('i/H','i-H').lower()+'.png'
+        iconimage=image+_name.replace(' ','').replace('-Free','').replace('HD','').replace('i/H','i-H').replace('-[US]','').replace('-[EU]','').replace('[COLOR yellow]','').replace('[/COLOR]','').replace(' (G)','').lower()+'.png'
         if ADDON.getSetting('tvguide')=='true':
             try:
                 name=_name+'[COLOR yellow]%s[/COLOR]'% tvguide.tvguide(_name)
@@ -327,9 +412,6 @@ def PLAY_STREAM(name, url, iconimage, play, description):
     
             
         
-def EXIT():
-        xbmc.executebuiltin("XBMC.Container.Update(path,replace)")
-        xbmc.executebuiltin("XBMC.ActivateWindow(Home)")
         
         
     
@@ -353,14 +435,15 @@ def get_params():
 
 def addDir(name,url,mode,iconimage,play,date,description,page=''):
         u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&iconimage="+urllib.quote_plus(iconimage)+"&play="+urllib.quote_plus(play)+"&date="+urllib.quote_plus(date)+"&description="+urllib.quote_plus(description)+"&page="+str(page)
-        #print name+'='+u
+        #print name.replace('-[US]','').replace('-[EU]','').replace('[COLOR yellow]','').replace('[/COLOR]','').replace(' (G)','')+'='+u
         liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
         liz.setInfo( type="Video", infoLabels={ "Title": name,"Premiered":date,"Plot":description} )
         menu=[]
+        menu.append(('[COLOR green]Download Channel List[/COLOR]','XBMC.RunPlugin(%s?mode=204&url=None&description=%s&name=%s&play=False&iconimage=%s)'% (sys.argv[0],description,name,iconimage)))
         menu.append(('[COLOR yellow]Schedule[/COLOR]','XBMC.Container.Update(%s?mode=200&url=None&description=%s&name=%s&play=False&iconimage=%s)'% (sys.argv[0],description,name,iconimage)))
         menu.append(('[COLOR orange]Grab AuthToken[/COLOR]','XBMC.RunPlugin(%s?mode=202&url=None&description=%s&name=%s&play=False&iconimage=%s)'% (sys.argv[0],description,name,iconimage)))
         menu.append(('[COLOR red]Delete Cookie[/COLOR]','XBMC.RunPlugin(%s?mode=203&url=None&description=%s&name=%s&play=False&iconimage=%s)'% (sys.argv[0],description,name,iconimage)))
-        
+        menu.append(('[COLOR cyan]Log Out[/COLOR]','XBMC.RunPlugin(%s?mode=205&url=None&description=%s&name=%s&play=False&iconimage=%s)'% (sys.argv[0],description,name,iconimage)))
         liz.addContextMenuItems(items=menu, replaceItems=False)
         if mode == 2:
             liz.setProperty("IsPlayable","true")
@@ -434,13 +517,21 @@ elif mode==201:
         
 elif mode==202:
         LOGIN()
-        GRAB_AUTH()
+        try:GRAB_AUTH()
+        except:pass
         Show_Dialog()
         
 elif mode==203:
         os.remove(cookie_jar)
         Show_Dialog()
+    
+elif mode==204:
+        downloadchannel()     
         
+elif mode==205:
+        LOGOUT()        
+           
+            
 elif mode==2001:
         ADDON.openSettings()
 

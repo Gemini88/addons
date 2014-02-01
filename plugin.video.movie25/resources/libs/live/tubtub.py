@@ -9,7 +9,7 @@ addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 addon = Addon('plugin.video.movie25', sys.argv)
 art = main.art
-from universal import watchhistory
+from resources.universal import watchhistory
     
 wh = watchhistory.WatchHistory('plugin.video.movie25')
 
@@ -36,10 +36,10 @@ def TubTubLink(mname,murl):
         playlist.clear()
         stream_url = match[0]
         listitem = xbmcgui.ListItem(mname)
-        
-        playlist.add(stream_url,listitem)
-        xbmcPlayer = xbmc.Player()
-        xbmcPlayer.play(playlist)
+        infoL={'Title': mname, 'Genre': 'Live'} 
+        from resources.universal import playbackengine
+        player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type='movie', title=mname,season='', episode='', year='',img=thumb,infolabels=infoL, watchedCallbackwithParams='',imdb_id='')
+
         #WatchHistory
         if selfAddon.getSetting("whistory") == "true":
             wh.add_item(mname+' '+'[COLOR green]TubTub[/COLOR]', sys.argv[0]+sys.argv[2], infolabels='', img='', fanart='', is_folder=False)

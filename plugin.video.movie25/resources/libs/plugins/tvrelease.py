@@ -56,8 +56,8 @@ def INDEX(url):
     for tag, url, name in r:
         url = BASEURL + url
         if re.search('(?i)WEB-DL',name): tag = tag.strip() + " WEB-DL"
-        if re.findall('\d+p\s', name):
-            r = re.findall('(.+?)\s(\d+p)\s', name)
+        if re.findall('\d{4}p', name):
+            r = re.findall('(.+?)\s(\d+p)', name)
             for name, quality in r:
                 tag = tag.replace('720p',quality)
                 pass
@@ -73,6 +73,7 @@ def INDEX(url):
             r = re.findall('(.+?)\shdtv\sx',name, re.I)
             for name in r:
                 pass
+        name = re.sub('\s\s+',' ',name).strip()
         name = name+' [COLOR red]'+re.sub('(?sim)^(TV-|Movies-)(.*)','\\2',tag)+'[/COLOR]'
         if SearchType == None:
             if 'TV' in tag:
@@ -91,8 +92,7 @@ def INDEX(url):
         percent = (loadedLinks * 100)/totalLinks
         remaining_display = 'Media loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
         dialogWait.update(percent,'[B]Will load instantly from now on[/B]',remaining_display)
-        if (dialogWait.iscanceled()):
-            return False
+        if dialogWait.iscanceled(): return False
     dialogWait.close()
     del dialogWait
     if "<div class='zmg_pn'" in html:
@@ -130,37 +130,39 @@ def LISTHOSTERS(name,url):
             main.addDown2(name.strip()+" [COLOR blue]"+host.upper()+"[/COLOR]",url,1005,art+'/hosts/'+host+'.png',art+'/hosts/'+host+'.png')
             
 def superSearch(encode,type):
-    if type == 'Movies': cat = 'Movies-XviD,Movies-720p,Movies-480p,Movies-Foreign,Movies-DVDR,'
-    else: cat = 'TV-XviD,TV-Mp4,TV-720p,TV-480p,TV-Foreign,'
-    surl ='http://tv-release.net/?s='+encode+'&cat='+cat
-    returnList=[]
-    link=main.OPENURL(surl,verbose=False)
-    link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
-    pattern = '<tr><td[^>]*?><a [^>]*?>([^<]*?)</a></td><td[^>]*?><a href=\'([^\']*?)\'[^>]*?>([^<]*?)<'
-    r = re.findall(pattern, link, re.I|re.M|re.DOTALL)
-    for tag, url, name in r:
-        url = BASEURL + url
-        if re.search('(?i)WEB-DL',name): tag = tag.strip() + " WEB-DL"
-        if re.findall('\d+p\s', name):
-            r = re.findall('(.+?)\s(\d+p)\s', name)
-            for name, quality in r:
-                tag = tag.replace('720p',quality)
-                pass
-        if re.findall('\ss\d+e\d+\s', name, re.I|re.DOTALL):
-            r = re.findall('(.+?)\ss(\d+)e(\d+)\s', name, re.I)
-            for name, season, episode in r:
-                name = name+' S'+season+'E'+episode
-        elif re.findall('\s\d{4}\s\d{2}\s\d{2}\s', name):
-            r = re.findall('(.+?)\s(\d{4})\s(\d{2})\s(\d{2})\s',name)
-            for name, year, month, day in r:
-                name = name+' '+year+' '+month+' '+day
-        elif re.findall('\shdtv\sx', name, re.I):
-            r = re.findall('(.+?)\shdtv\sx',name, re.I)
-            for name in r:
-                pass
-        name = name+' [COLOR red]'+re.sub('(?sim)^(TV-|Movies-)(.*)','\\2',tag)+'[/COLOR]'
-        returnList.append((name,prettyName,url,'',1003,True))
-    return returnList
+    try:
+        if type == 'Movies': cat = 'Movies-XviD,Movies-720p,Movies-480p,Movies-Foreign,Movies-DVDR,'
+        else: cat = 'TV-XviD,TV-Mp4,TV-720p,TV-480p,TV-Foreign,'
+        surl ='http://tv-release.net/?s='+encode+'&cat='+cat
+        returnList=[]
+        link=main.OPENURL(surl,verbose=False)
+        link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
+        pattern = '<tr><td[^>]*?><a [^>]*?>([^<]*?)</a></td><td[^>]*?><a href=\'([^\']*?)\'[^>]*?>([^<]*?)<'
+        r = re.findall(pattern, link, re.I|re.M|re.DOTALL)
+        for tag, url, name in r:
+            url = BASEURL + url
+            if re.search('(?i)WEB-DL',name): tag = tag.strip() + " WEB-DL"
+            if re.findall('\d+p\s', name):
+                r = re.findall('(.+?)\s(\d+p)\s', name)
+                for name, quality in r:
+                    tag = tag.replace('720p',quality)
+                    pass
+            if re.findall('\ss\d+e\d+\s', name, re.I|re.DOTALL):
+                r = re.findall('(.+?)\ss(\d+)e(\d+)\s', name, re.I)
+                for name, season, episode in r:
+                    name = name+' S'+season+'E'+episode
+            elif re.findall('\s\d{4}\s\d{2}\s\d{2}\s', name):
+                r = re.findall('(.+?)\s(\d{4})\s(\d{2})\s(\d{2})\s',name)
+                for name, year, month, day in r:
+                    name = name+' '+year+' '+month+' '+day
+            elif re.findall('\shdtv\sx', name, re.I):
+                r = re.findall('(.+?)\shdtv\sx',name, re.I)
+                for name in r:
+                    pass
+            name = name+' [COLOR red]'+re.sub('(?sim)^(TV-|Movies-)(.*)','\\2',tag)+'[/COLOR]'
+            returnList.append((name,prettyName,url,'',1003,True))
+        return returnList
+    except: return []
 
 def SEARCHhistory():
     dialog = xbmcgui.Dialog()
@@ -261,13 +263,13 @@ def PLAYMEDIA(name,url):
         stream_url = main.resolve_url(url)
         infoL={'Title': infoLabels['title'], 'Plot': infoLabels['plot'], 'Genre': infoLabels['genre']}
         # play with bookmark
-        from universal import playbackengine
+        from resources.universal import playbackengine
         player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type=video_type, title=str(infoLabels['title']),season=str(season), episode=str(episode), year=str(infoLabels['year']),img=img,infolabels=infoL, watchedCallbackwithParams=main.WatchedCallbackwithParams,imdb_id=imdb_id)
         #WatchHistory
         if selfAddon.getSetting("whistory") == "true":
-            from universal import  watchhistory
+            from resources.universal import watchhistory
             wh = watchhistory.WatchHistory(addon_id)
-            wh.add_item(hname+' '+'[COLOR=FF67cc33]TvRelease[/COLOR]', sys.argv[0]+sys.argv[2], infolabels=infolabels, img=str(img), fanart=str(fanart), is_folder=False)
+            wh.add_item(name+' '+'[COLOR=FF67cc33]TvRelease[/COLOR]', sys.argv[0]+sys.argv[2], infolabels=infolabels, img=str(img), fanart=str(fanart), is_folder=False)
         player.KeepAlive()
         return ok
     except:

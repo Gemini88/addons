@@ -9,7 +9,7 @@ addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 addon = Addon('plugin.video.movie25', sys.argv)
 art = main.art
-from universal import watchhistory    
+from resources.universal import watchhistory    
 wh = watchhistory.WatchHistory('plugin.video.movie25')
 
 datapath = addon.get_profile()
@@ -621,12 +621,14 @@ def LINK(mname,murl,thumb):
         ok=True
         playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         playlist.clear()
+        if '</regex>'in murl: 
+                murl=main.doRegex(murl)
         stream_url = main.resolve_url(murl) 
         listitem = xbmcgui.ListItem(thumbnailImage=thumb)
-        listitem.setInfo('video', {'Title': mname, 'Genre': 'Custom'} )
-        playlist.add(stream_url,listitem)
-        xbmcPlayer = xbmc.Player()
-        xbmcPlayer.play(playlist)
+        infoL={'Title': mname, 'Genre': 'Custom'} 
+        from resources.universal import playbackengine
+        player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type='movie', title=mname,season='', episode='', year='',img=thumb,infolabels=infoL, watchedCallbackwithParams='',imdb_id='')
+
         #WatchHistory
         if selfAddon.getSetting("whistory") == "true":
             wh.add_item(mname+' '+'[COLOR green]Custom Channel[/COLOR]', sys.argv[0]+sys.argv[2], infolabels='', img=thumb, fanart='', is_folder=False)

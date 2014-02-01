@@ -5,7 +5,7 @@ from resources.libs import main
 #Mash Up - by Mash2k3 2012.
 
 from t0mm0.common.addon import Addon
-from universal import playbackengine, watchhistory
+from resources.universal import playbackengine, watchhistory
 addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 addon = Addon('plugin.video.movie25', sys.argv)
@@ -72,8 +72,8 @@ def ESPNLink(mname,murl,thumb,desc):
         match=re.compile('"thumbnailURL": "http://a.espncdn.com/combiner/i.?img=/media/motion(.+?).jpg',re.DOTALL).findall(link)[0]
         print match
         playpath = match + "_" + selfAddon.getSetting("espn-qua") + ".mp4"
-	url = 'rtmp://svod.espn.go.com/motion'
-        stream_url = url+playpath
+	#url = 'rtmp://svod.espn.go.com/motion'
+        stream_url = 'rtmp://svod.espn.go.com/motion'+playpath
         infoL={ "Title": mname, "Plot": desc}
         # play with bookmark
         player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type='', title=mname,season='', episode='', year='',img=thumb,infolabels=infoL, watchedCallbackwithParams=main.WatchedCallbackwithParams,imdb_id='')

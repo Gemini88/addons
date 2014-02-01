@@ -9,7 +9,7 @@ addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 addon = Addon('plugin.video.movie25', sys.argv)
 art = main.art
-from universal import watchhistory
+from resources.universal import watchhistory
     
 wh = watchhistory.WatchHistory('plugin.video.movie25')
 
@@ -32,7 +32,8 @@ def CastalbaList(murl):
                     if name != 'Playboy TV':
                         url=url.replace('..','')
                         thumb=thumb.replace('..','')
-                        main.addPlayL(name+'   [COLOR red]'+section+'[/COLOR]','http://castalba.tv'+url,123,'http://castalba.tv'+thumb,'','','','','')
+                        main.addPlayL(name+'   [COLOR red]'+section+'[/COLOR]','http://castalba.tv'+url,123,'http://castalba.tv'+thumb,'','','','','',secName='Castalba',secIcon=art+'/castalba.png')
+
                 loadedLinks = loadedLinks + 1
                 percent = (loadedLinks * 100)/totalLinks
                 remaining_display = 'Pages loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
@@ -47,8 +48,6 @@ def CastalbaLink(mname,murl,thumb):
         main.GA("Castalba","Watched")
         link=main.OPENURL(murl)
         ok=True
-        playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-        playlist.clear()
         link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
         match=re.compile('<script type="text/javascript"> id="(.+?)"; ew="(.+?)"; eh="(.+?)";</script>').findall(link)
         for fid,wid,hei in match:
@@ -59,10 +58,10 @@ def CastalbaLink(mname,murl,thumb):
         playPath=re.compile("'file\': \'(.+?)\',\r\n\r\n\t\t\t\'streamer\'").findall(link2)
         stream_url= rtmp[0] + ' playpath=' + playPath[0] + ' swfUrl=' + swfUrl[0] + ' live=true timeout=15 swfVfy=true pageUrl=' + pageUrl
         listitem = xbmcgui.ListItem(mname, thumbnailImage=thumb)
-        
-        playlist.add(stream_url,listitem)
-        xbmcPlayer = xbmc.Player()
-        xbmcPlayer.play(playlist)
+        infoL={'Title': mname, 'Genre': 'Live'} 
+        from resources.universal import playbackengine
+        player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type='movie', title=mname,season='', episode='', year='',img=thumb,infolabels=infoL, watchedCallbackwithParams='',imdb_id='')
+
         #WatchHistory
         if selfAddon.getSetting("whistory") == "true":
             wh.add_item(mname+' '+'[COLOR green]Castalba[/COLOR]', sys.argv[0]+sys.argv[2], infolabels='', img=thumb, fanart='', is_folder=False)

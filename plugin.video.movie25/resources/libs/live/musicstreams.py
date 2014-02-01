@@ -10,17 +10,17 @@ addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 addon = Addon('plugin.video.movie25', sys.argv)
 art = main.art
-from universal import watchhistory
+from resources.universal import watchhistory
     
 wh = watchhistory.WatchHistory('plugin.video.movie25')
 
 def MUSICSTREAMS():
         main.GA("MUSIC-Streams","List")
-        link=main.OPENURL('https://github.com/mash2k3/MashUpStreams/raw/master/playlists/musicstreams2.xml')
+        link=main.OPENURL('https://raw.github.com/mash2k3/MashUpStreams/master/playlists/musicstreams2.xml')
         link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
         match=re.compile('<item><titl[^>]+>([^<]+)</title><link>(.+?)</link><thumbnail>(.+?)</thumbnail></item>').findall(link)
         for name,url,thumb in sorted(match):
-            main.addPlayL(name,url,184,thumb,'','','','','')
+            main.addPlayL(name,url,184,thumb,'','','','','',secName='Music Streams',secIcon=art+'/miscmusic.png')
 
         
         
@@ -31,11 +31,10 @@ def MUSICSTREAMSLink(mname,murl,thumb):
         playlist.clear()
         stream_url = murl
         listitem = xbmcgui.ListItem(thumbnailImage=thumb)
-        listitem.setInfo('video', {'Title': mname, 'Genre': 'Live'} )
-        
-        playlist.add(stream_url,listitem)
-        xbmcPlayer = xbmc.Player()
-        xbmcPlayer.play(playlist)
+        infoL={'Title': mname, 'Genre': 'Live'} 
+        from resources.universal import playbackengine
+        player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type='movie', title=mname,season='', episode='', year='',img=thumb,infolabels=infoL, watchedCallbackwithParams='',imdb_id='')
+
         #WatchHistory
         if selfAddon.getSetting("whistory") == "true":
             wh.add_item(mname+' '+'[COLOR green]MusicStreams[/COLOR]', sys.argv[0]+sys.argv[2], infolabels='', img=thumb, fanart='', is_folder=False)

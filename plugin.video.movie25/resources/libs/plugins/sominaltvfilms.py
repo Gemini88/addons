@@ -9,7 +9,7 @@ import time
 #Mash Up - by Mash2k3 2012.
 
 from t0mm0.common.addon import Addon
-from universal import playbackengine, watchhistory
+from resources.universal import playbackengine, watchhistory
 addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 addon = Addon('plugin.video.movie25', sys.argv)
@@ -24,20 +24,20 @@ wh = watchhistory.WatchHistory('plugin.video.movie25')
 def MAIN():
         main.GA("Plugin","SominalTv")
         main.addDir('Search','xoxe',624,art+'/search.png')
-        main.addDir('Hindi','http://www.sominaltvfilms.com/category/hindi-movies',620,art+'/wfs/hindi.png')
-        main.addDir('Telugu','http://www.sominaltvfilms.com/category/telugu',620,art+'/wfs/telugu.png')
-        main.addDir('Tamil','http://www.sominaltvfilms.com/category/tamil',620,art+'/wfs/tamil.png')
-        main.addDir('Malayalam','http://www.sominaltvfilms.com/category/malayalam',620,art+'/wfs/malayalam.png')
-        main.addDir('Punjabi','http://www.sominaltvfilms.com/category/punjabi',620,art+'/wfs/punjabi.png')
-        main.addDir('BluRay','http://www.sominaltvfilms.com/category/bluray',620,art+'/wfs/bluray.png')
-        main.addDir('All English Subtitled Movies','http://www.sominaltvfilms.com/category/english-subtitled',620,art+'/wfs/subtitled.png')
-        main.addDir('All Hindi Dubbed Movies','http://www.sominaltvfilms.com/category/hindi-dubbed',620,art+'/wfs/dubbed.png')
+        main.addDir('Hindi','http://www.sominaltvfilms.com/category/hindi-movies',620,art+'/hindi.png')
+        main.addDir('Telugu','http://www.sominaltvfilms.com/category/telugu',620,art+'/telugu.png')
+        main.addDir('Tamil','http://www.sominaltvfilms.com/category/tamil',620,art+'/tamil.png')
+        main.addDir('Malayalam','http://www.sominaltvfilms.com/category/malayalam',620,art+'/malayalam.png')
+        main.addDir('Punjabi','http://www.sominaltvfilms.com/category/punjabi',620,art+'/punjabi.png')
+        main.addDir('BluRay','http://www.sominaltvfilms.com/category/bluray',620,art+'/bluray.png')
+        main.addDir('All English Subtitled Movies','http://www.sominaltvfilms.com/category/english-subtitled',620,art+'/subtitled.png')
+        main.addDir('All Hindi Dubbed Movies','http://www.sominaltvfilms.com/category/hindi-dubbed',620,art+'/dubbed.png')
 
 
 def AtoZ(url):
-    main.addDir('0-9','http://www.sominaltvfilms.com/search/label/%23'+url+'?&max-results=15',620,art+'/wfs/09.png')
+    main.addDir('0-9','http://www.sominaltvfilms.com/search/label/%23'+url+'?&max-results=15',620,art+'/09.png')
     for i in string.ascii_uppercase:
-            main.addDir(i,'http://www.sominaltvfilms.com/search/label/'+i+url+'?&max-results=15',620,art+'/wfs/'+i+'.png')
+            main.addDir(i,'http://www.sominaltvfilms.com/search/label/'+i+url+'?&max-results=15',620,art+'/'+i.lower()+'.png')
     main.GA("Watchseries","A-Z")
     main.VIEWSB()
     
@@ -61,20 +61,20 @@ def SEARCH():
 def LIST(mname,murl):
         main.GA("SominalTv","List")
         if mname=='Hindi':
-                main.addDir('Hindi English Subtitled','http://www.sominaltvfilms.com/category/hindi-movies-english-subtitles',620,art+'/wfs/subtitled.png')
-                main.addDir('Hindi BluRay','http://www.sominaltvfilms.com/category/hindi-blurays',620,art+'/wfs/bluray.png')
+                main.addDir('Hindi English Subtitled','http://www.sominaltvfilms.com/category/hindi-movies-english-subtitles',620,art+'/subtitled.png')
+                main.addDir('Hindi BluRay','http://www.sominaltvfilms.com/category/hindi-blurays',620,art+'/bluray.png')
         elif mname=='Telugu':
-                main.addDir('Telugu English Subtitled','http://www.sominaltvfilms.com/category/telugu-movies-english-subtitles',620,art+'/wfs/subtitled.png')
-                main.addDir('Telugu BluRay','http://www.sominaltvfilms.com/category/telugu-blurays',620,art+'/wfs/bluray.png')
+                main.addDir('Telugu English Subtitled','http://www.sominaltvfilms.com/category/telugu-movies-english-subtitles',620,art+'/subtitled.png')
+                main.addDir('Telugu BluRay','http://www.sominaltvfilms.com/category/telugu-blurays',620,art+'/bluray.png')
         elif mname=='Tamil':
-                main.addDir('Tamil English Subtitled','http://www.sominaltvfilms.com/category/tamil-movies-english-subtitles',620,art+'/wfs/subtitled.png')
-                main.addDir('Tamil BluRay','http://www.sominaltvfilms.com/category/tamil-blurays',620,art+'/wfs/bluray.png')
+                main.addDir('Tamil English Subtitled','http://www.sominaltvfilms.com/category/tamil-movies-english-subtitles',620,art+'/subtitled.png')
+                main.addDir('Tamil BluRay','http://www.sominaltvfilms.com/category/tamil-blurays',620,art+'/bluray.png')
         elif mname=='Malayalam':
-                main.addDir('Malayalam English Subtitled','http://www.sominaltvfilms.com/category/malayalam-movies-english-subtitles',620,art+'/wfs/subtitled.png')
+                main.addDir('Malayalam English Subtitled','http://www.sominaltvfilms.com/category/malayalam-movies-english-subtitles',620,art+'/subtitled.png')
         elif mname=='Punjabi':
-                main.addDir('Punjabi English Subtitled','http://www.sominaltvfilms.com/category/punjabi-movies-english-subtitles',620,art+'/wfs/subtitled.png')
+                main.addDir('Punjabi English Subtitled','http://www.sominaltvfilms.com/category/punjabi-movies-english-subtitles',620,art+'/subtitled.png')
         elif mname=='All Hindi Dubbed Movies':
-                main.addDir('Dubbed BluRay','http://www.sominaltvfilms.com/category/hindi-dubbed-blurays',620,art+'/wfs/bluray.png')
+                main.addDir('Dubbed BluRay','http://www.sominaltvfilms.com/category/hindi-dubbed-blurays',620,art+'/bluray.png')
         link=main.OPENURL(murl)
         link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
         match=re.compile('<img width=".+?" height=".+?" src="(.+?)" class=".+?" alt=".+?/></a></div></center><div class=".+?"><h2 class=".+?"><a class=".+?" href="(.+?)" title=".+?">(.+?)</a></h2><div class="excerpt">(.+?)...</div>').findall(link)
@@ -100,36 +100,28 @@ def LIST(mname,murl):
             main.addDir('Next',paginate[0],620,art+'/next2.png')
         main.VIEWS()
 
-def LINK(manme,murl,thumb,fan,desc):
+def LINK(mname,murl,thumb,fan,desc):
+        parts=[]
         link=main.OPENURL(murl)
         link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
         match= re.compile('<a href="http://adf.ly/377117/(.+?)".+?target="_blank.+?>(.+?)</a>').findall(link)
-
+        b=1
         for url,name in match:
             name=name.replace('</b>','').replace('<b>','').replace('<span style="font-size: x-large;">','').replace('<span id="goog_1857978069"></span><span id="goog_1857978070"></span>','').replace('<span style="font-family: Verdana, sans-serif; font-size: x-large;">','').replace('<span style="font-family: Verdana, sans-serif; font-size: large;">','').replace('<span>','').replace('</span>','')
             http= re.compile('http://').findall(url)
             if len(http)==0:
                 url='http://'+url
             main.addPlayc(name,url,622,thumb,desc,fan,'','','')
-    
+            parts.append(('Part '+str(b),url))
+            b=b+1
+        if parts and len(parts)>1:
+            main.addPlayc(mname+' [COLOR blue]Play All[/COLOR]',str(parts),622,thumb,desc,fan,'','','')
 
-def LINK2(mname,murl,thumb,desc):
-       
-        ok=True
+def getvideo(murl,answer):
+        link2=main.OPENURL(murl)
         namelist=[]
         urllist=[]
-        infoLabels =main.GETMETAT(mname,'','',thumb)
-        video_type='movie'
-        season=''
-        episode=''
-        img=infoLabels['cover_url']
-        fanart =infoLabels['backdrop_url']
-        imdb_id=infoLabels['imdb_id']
-        infolabels = { 'supports_meta' : 'true', 'video_type':video_type, 'name':str(infoLabels['title']), 'imdb_id':str(infoLabels['imdb_id']), 'season':str(season), 'episode':str(episode), 'year':str(infoLabels['year']) }
-        link2=main.OPENURL(murl)
         SRT=os.path.join(datapath,'Sub.srt')
-        if  os.path.exists(SRT):
-                os.remove(SRT)
         link2=link2.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','').replace('iframe src="//www.facebook.com','')
         docUrl= re.compile('iframe src="(.+?)"').findall(link2)
         if len(docUrl)==0:
@@ -215,20 +207,52 @@ def LINK2(mname,murl,thumb,desc):
                                     stream_qlty = 'SD-360p'
                                 namelist.append(stream_qlty)
                         dialog = xbmcgui.Dialog()
-                        answer =dialog.select("Quality Select", namelist)
-                        if answer != -1:
-                                main.GA("SominalTv","Watched")
-                                xbmc.executebuiltin("XBMC.Notification(Please Wait!,Opening Link,3000)")
-                                stream_url2 = urllist[int(answer)]
-                                infoL={'Title': infoLabels['title'], 'Plot': infoLabels['plot'], 'Genre': infoLabels['genre']}
-                                # play with bookmark
-                                player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type=video_type, title=str(infoLabels['title']),season=str(season), episode=str(episode), year=str(infoLabels['year']),img=img,infolabels=infoL, watchedCallbackwithParams=main.WatchedCallbackwithParams,imdb_id=imdb_id)
-                                player.setSubtitles(SRT)#inserts Srt file from profile folder
-                                main.GA("SominalTv","Watched")
-                                #WatchHistory
-                                if selfAddon.getSetting("whistory") == "true":
-                                    wh.add_item(mname+' '+'[COLOR green]SominalFilms[/COLOR]', sys.argv[0]+sys.argv[2], infolabels='', img=thumb, fanart='', is_folder=False)
-                                player.KeepAlive()
+                        if answer=='x11g':
+                                answer='0'
+                        else:
+                                answer =dialog.select("Quality Select", namelist)
+                        return urllist[int(answer)]
+                
+def LINK2(mname,murl,thumb,desc):
+        SRT=os.path.join(datapath,'Sub.srt')
+        if  os.path.exists(SRT):
+                os.remove(SRT)
+        ok=True
+        infoLabels =main.GETMETAT(mname,'','',thumb)
+        video_type='movie'
+        season=''
+        episode=''
+        img=infoLabels['cover_url']
+        fanart =infoLabels['backdrop_url']
+        imdb_id=infoLabels['imdb_id']
+        infolabels = { 'supports_meta' : 'true', 'video_type':video_type, 'name':str(infoLabels['title']), 'imdb_id':str(infoLabels['imdb_id']), 'season':str(season), 'episode':str(episode), 'year':str(infoLabels['year']) }
+        main.GA("SominalTv","Watched")
+        if murl:
+                if "'," in murl:
+                    print murl
+                    mname=main.removeColoredText(mname)
+                    pl=xbmc.PlayList(1);pl.clear()
+                    playlist = sorted(list(set(eval(murl))), key=lambda playlist: playlist[0])
+                    for xname,link in playlist:
+                        pl.add(getvideo(link,'x11g'),xbmcgui.ListItem(mname+' '+xname,thumbnailImage=img))
+                    xbmc.Player().play(pl)
+                    xbmc.Player().setSubtitles(SRT)
+                    while xbmc.Player().isPlaying():
+                        xbmc.sleep(2500)
+                    if selfAddon.getSetting("whistory") == "true":
+                        wh.add_item(mname+' '+'[COLOR green]SominalFilms[/COLOR]', sys.argv[0]+sys.argv[2], infolabels='', img=thumb, fanart='', is_folder=False)
+   
+                else:
+                        xbmc.executebuiltin("XBMC.Notification(Please Wait!,Opening Link,3000)")
+                        stream_url2 = getvideo(murl,'')
+                        infoL={'Title': infoLabels['title'], 'Plot': infoLabels['plot'], 'Genre': infoLabels['genre']}
+                        # play with bookmark
+                        player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url2, addon_id=addon_id, video_type=video_type, title=str(infoLabels['title']),season=str(season), episode=str(episode), year=str(infoLabels['year']),img=img,infolabels=infoL, watchedCallbackwithParams=main.WatchedCallbackwithParams,imdb_id=imdb_id)
+                        player.setSubtitles(SRT)#inserts Srt file from profile folder
+                        #WatchHistory
+                        if selfAddon.getSetting("whistory") == "true":
+                                wh.add_item(mname+' '+'[COLOR green]SominalFilms[/COLOR]', sys.argv[0]+sys.argv[2], infolabels='', img=thumb, fanart='', is_folder=False)
+                        player.KeepAlive()
                                  
 
                         return ok

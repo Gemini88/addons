@@ -32,7 +32,7 @@ DeleteIncomplete = 'true'
 #DeleteIncomplete=selfAddon.getSetting('delete-incomplete-downloads')
 playFile = True
 
-art = 'https://github.com/mash2k3/MashupArtwork/raw/master/art'
+art = 'https://raw.github.com/mash2k3/MashupArtwork/master/art'
 NotifyPercents = range(0, 100 + NotifyPercent, NotifyPercent)
 start_time = time.time()
 datapath = addon.get_profile()

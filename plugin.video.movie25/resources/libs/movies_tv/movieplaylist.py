@@ -151,11 +151,11 @@ def MLink(mname,murl,thumb):
             infoL={'Title': infoLabels['title'], 'Plot': infoLabels['plot'], 'Genre': infoLabels['genre'], 'originaltitle': infoLabels['metaName']}
             # play with bookmark
             stream_url=stream_url.replace(' ','%20')
-            from universal import playbackengine
+            from resources.universal import playbackengine
             player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type=video_type, title=str(infoLabels['title']),season=str(season), episode=str(episode), year=str(infoLabels['year']),img=img,infolabels=infoL, watchedCallbackwithParams=main.WatchedCallbackwithParams,imdb_id=imdb_id)
             #WatchHistory
             if selfAddon.getSetting("whistory") == "true":
-                from universal import  watchhistory
+                from resources.universal import  watchhistory
                 wh = watchhistory.WatchHistory('plugin.video.movie25')
                 wh.add_item(mname+' '+'[COLOR green]VIPlaylist[/COLOR]', sys.argv[0]+sys.argv[2], infolabels=infolabels, img=img, fanart=fanart, is_folder=False)
             player.KeepAlive()
@@ -277,11 +277,11 @@ def MLink2(mname,murl,thumb,muvideo=False):
                     infoL={'Title': infoLabels['title'], 'Plot': infoLabels['plot'], 'Genre': infoLabels['genre'], 'originaltitle': infoLabels['metaName']}
                     # play with bookmark
                     stream_url=stream_url.replace(' ','%20')
-                    from universal import playbackengine
+                    from resources.universal import playbackengine
                     player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type=video_type, title=str(infoLabels['title']),season=str(season), episode=str(episode), year=str(infoLabels['year']),img=img,infolabels=infoL, watchedCallbackwithParams=main.WatchedCallbackwithParams,imdb_id=imdb_id)
                     #WatchHistory
                     if selfAddon.getSetting("whistory") == "true":
-                        from universal import  watchhistory
+                        from resources.universal import  watchhistory
                         wh = watchhistory.WatchHistory('plugin.video.movie25')
                         wh.add_item(mname+' '+'[COLOR green]VIPlaylist[/COLOR]', sys.argv[0]+sys.argv[2], infolabels=infolabels, img=img, fanart=fanart, is_folder=False)
                     player.KeepAlive()

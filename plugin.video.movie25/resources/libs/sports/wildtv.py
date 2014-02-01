@@ -5,7 +5,7 @@ from resources.libs import main
 #Mash Up - by Mash2k3 2012.
 
 from t0mm0.common.addon import Addon
-from universal import playbackengine, watchhistory
+from resources.universal import playbackengine, watchhistory
 addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 addon = Addon('plugin.video.movie25', sys.argv)
@@ -24,10 +24,12 @@ def WILDTV(murl):
 def LISTWT(murl):
         main.GA("Wildtv","Wildtv-list")
         link=main.OPENURL(murl)
-        match=re.compile('alt="Video: (.+?)" href="(.+?)">\r\n<img class=".+?" src="(.+?)"').findall(link)
+        link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','').replace('\xc2\xa0','')
+        match=re.compile('<a title="(.+?)" alt=".+?" href="(.+?)"><img class=".+?src="(.+?)" />',re.DOTALL).findall(link)
+                          
         for name, url, thumb in match:
             thumb='https:'+thumb
-            url='https://www.wildtv.ca/' +url
+            url='https://www.wildtv.ca' +url
             main.addPlayMs(name,url,94,thumb,'','','','','')
 
 def LINKWT(mname,murl):

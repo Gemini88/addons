@@ -1,3 +1,64 @@
+[B]Version 1.4.0[/B]
+
+- Added Super Search function to search all sources across MashUp
+- Optimized MashUp for speed and performance on (slow/mobile) devices, even faster on fast systems
+- Improved the speed of collecting hosts (much faster)
+- Added Sidereel TV tracker
+- Improved search history
+- Made loading metas cancelable across MashUp
+- Removed Switch Up
+- Removed ads module and now MashUp is ad-free again
+- Made more sources downloadable, marked with [DC] tag in MashUp
+- Brought back the ability to mark items as XBMC favorites
+- Improved auto update, now works when mashup is started through XBMC favorites
+- Added changelog for auto updates, can be accessed in settings
+- Added VECTOR TH skin thanks T.Hyland
+- Beautified and improved speed of Rlsmix, MyVideoLinks and various other sources
+- Added personalized My Rlsmix list, can be enabled in (Log-ins) settings
+- Added quality selection to Rlsmix, can be adjusted in (Log-ins) settings
+- Added Imports Doctor to fixes in settings (fixes dependencies if broken)
+- Added Maintenance options to Fix-It section
+- Modified custom channels to allow sublinks
+- Added TV Guide Dixie
+- Added complete Noobroom
+- Added new source IceFilms
+- Added new source MBOX
+- Added new source SceneSource
+- Added new source Scenelog
+- Added new source Dl4free (real 1080p, RD Only)
+- Added new source FilesTube (real 1080p, RD Only)
+- Added new source Dramania
+- Added new source Mooviesmaniac International (UK)
+- Added SkyAccess to Live section
+- Added live NHL stream section (Gotham Only)
+- Replaced Cinvip with Peliculaspepito
+- Replaced Extramina with Watching Now
+- Added categories to International section 
+- Added french source dpstreaming
+- Added johnlocker source to documentary
+- Added sokrostreams and docementaire (french)
+- Added source aflam to arabic
+- Added Anime sources Animania & Animetoon
+- Added Arabic source 3arabtv
+- Added Russian source Mailru & Cinemaxx
+- Added File not found message in resolvers
+- Added a lot more resolvers to MashUp (less chance that links won't work)
+- Added progress dialog to Sceper and Series Gate when collecting host
+- Improved the way live streams are played
+- Improved error handling in resolvers
+- Fixed various script errors
+- Fixed play trailer command in context menus
+- Fixed pagination problems
+- Fixed WatchSeries
+- Fixed TVrelease
+- Fixed Golfchannel
+- Fixed ESPN
+- Fixed iLive
+- Fixed Billionuploads
+- Fixed HugeFiles
+- Fixed Lemuploads
+- Fixed various other bugs and sources
+
 [B]Version 1.3.9[/B]
 
 -Fixed download issue where video are 0 bytes
@@ -67,7 +128,7 @@
 -Added Emergency fix for launch errors in settings
 -Split builtin plugins to anime and more tv & movies
 -Added search function in movie25 context menu
--Changed Support to XBMCTALK.COM 
+-Changed Support to MASHUPXBMC.COM 
 -Changed a few home screen icons
 -Added more live sections to sports section
 

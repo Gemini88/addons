@@ -22,6 +22,8 @@ ADDON = settings.addon()
 home = ADDON.getAddonInfo('path')
 sfdownloads= ADDON.getSetting('sfdownloads')
 datapath = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+font=ADDON.getSetting('font') 
+
 
 if os.path.exists(datapath)==False:
     os.mkdir(datapath) 
@@ -121,31 +123,31 @@ def CATEGORIES():
             dp.ok("Mikeys Karaoke","",'There is a New Database Update', 'Please Wait')
             Update()
             ADDON.setSetting('id',match[0])        
-        addDir('[COLOR blue]Youtube[/COLOR] Karaoke','url',19,art+'Main/youtube.png','none',1)
-        addDir('[COLOR blue]Sunfly[/COLOR] Karaoke','url',20,art+'Main/SUNFLY.png','none',1) 
-        addDir('[COLOR blue]Favourites[/COLOR]','url',2,art+'Main/SUNFLY.png','none',1)
+        addDir('[COLOR '+font+']'+'Youtube[/COLOR] Karaoke','url',19,art+'Main/youtube.png','none',1)
+        addDir('[COLOR '+font+']'+'Sunfly[/COLOR] Karaoke','url',20,art+'Main/SUNFLY.png','none',1) 
+        addDir('[COLOR '+font+']'+'Favourites[/COLOR]','url',2,art+'Main/SUNFLY.png','none',1)
         setView('movies', 'MAIN')
             
 def mikeyyoutube(url):
-        addDir('[COLOR blue]Search[/COLOR]-[COLOR blue]Y[/COLOR]outube Karaoke','url',3,art+'Main/Search.png','none',1)
+        addDir('[COLOR '+font+']'+'Search[/COLOR]-[COLOR '+font+']'+'Y[/COLOR]outube Karaoke','url',3,art+'Main/Search.png','none',1)
         if ADDON.getSetting('downloads') == 'true':
-            addDir('[COLOR blue]D[/COLOR]ownloads','url',15,art+'Main/favorites.png','',1)
-        addDir('[COLOR blue]Most[/COLOR] Popular','http://www.sunflykaraoke.com/browse/tracks/?sort_BrowseTracksAll=popularity-desc&pg_BrowseTracksAll=&show_BrowseTracksAll=500',7,art+'AtoZ/P.png','none',1)
-        addDir('[COLOR blue]L[/COLOR]atest','http://www.sunflykaraoke.com/browse/tracks/?sort_BrowseTracksAll=Latest&pg_BrowseTracksAll=&show_BrowseTracksAll=500',7,art+'AtoZ/L.png','none',1)
-        addDir('[COLOR blue]Browse[/COLOR] Artist','http://www.lyricsmania.com/lyrics/%s.html',1,art+'Main/Artist.png','none',4)
-        addDir('[COLOR blue]Browse[/COLOR] Tracks','http://www.sunflykaraoke.com/browse/tracks/%s?pgBrowseTracksAll=&show_BrowseTracksAll=50',1,art+'Main/Title.png','none',7)
-        addDir('[COLOR blue]G[/COLOR]enre','http://www.sunflykaraoke.com/',8,art+'Main/Genre.png','none',1)
+            addDir('[COLOR '+font+']'+'D[/COLOR]ownloads','url',15,art+'Main/favorites.png','',1)
+        addDir('[COLOR '+font+']'+'Most[/COLOR] Popular','http://www.sunflykaraoke.com/browse/tracks/?sort_BrowseTracksAll=popularity-desc&pg_BrowseTracksAll=&show_BrowseTracksAll=500',7,art+'AtoZ/P.png','none',1)
+        addDir('[COLOR '+font+']'+'L[/COLOR]atest','http://www.sunflykaraoke.com/browse/tracks/?sort_BrowseTracksAll=Latest&pg_BrowseTracksAll=&show_BrowseTracksAll=500',7,art+'AtoZ/L.png','none',1)
+        addDir('[COLOR '+font+']'+'Browse[/COLOR] Artist','http://www.lyricsmania.com/lyrics/%s.html',1,art+'Main/Artist.png','none',4)
+        addDir('[COLOR '+font+']'+'Browse[/COLOR] Tracks','http://www.sunflykaraoke.com/browse/tracks/%s?pgBrowseTracksAll=&show_BrowseTracksAll=50',1,art+'Main/Title.png','none',7)
+        addDir('[COLOR '+font+']'+'G[/COLOR]enre','http://www.sunflykaraoke.com/',8,art+'Main/Genre.png','none',1)
         setView('movies', 'MAIN')
         
 def mikeysunfly(url):
-        addDir('[COLOR blue]Search[/COLOR]-[COLOR blue]X[/COLOR]unity Karaoke','url',16,art+'Main/Search.png','none',1)
+        addDir('[COLOR '+font+']'+'Search[/COLOR]-[COLOR '+font+']'+'X[/COLOR]unity Karaoke','url',16,art+'Main/Search.png','none',1)
         if ADDON.getSetting('sfenable') == 'true':
-            addDir('[COLOR blue]D[/COLOR]ownloads','url',31,art+'Main/favorites.png','',1)
-        addDir('[COLOR blue]Search[/COLOR] By Number','url',25,art+'Main/Search.png','none',1)
-        addDir('[COLOR blue]Browse[/COLOR] Artist','http://www.sunflykaraoke.com/',1,art+'Main/Artist.png','none',23)
-        addDir('[COLOR blue]Browse[/COLOR] Tracks','http://www.sunflykaraoke.com/',1,art+'Main/Title.png','none',24)
-        addDir('[COLOR blue]G[/COLOR]enre','http://www.sunflykaraoke.com/',32,art+'Main/Genre.png','none',1)
-        addDir('[COLOR blue]D[/COLOR]ownload Database','http://www.sunflykaraoke.com/',103,'','none',1)
+            addDir('[COLOR '+font+']'+'D[/COLOR]ownloads','url',31,art+'Main/favorites.png','',1)
+        addDir('[COLOR '+font+']'+'Search[/COLOR] By Number','url',25,art+'Main/Search.png','none',1)
+        addDir('[COLOR '+font+']'+'Browse[/COLOR] Artist','http://www.sunflykaraoke.com/',1,art+'Main/Artist.png','none',23)
+        addDir('[COLOR '+font+']'+'Browse[/COLOR] Tracks','http://www.sunflykaraoke.com/',1,art+'Main/Title.png','none',24)
+        addDir('[COLOR '+font+']'+'G[/COLOR]enre','http://www.sunflykaraoke.com/',32,art+'Main/Genre.png','none',1)
+        addDir('[COLOR '+font+']'+'D[/COLOR]ownload Database','http://www.sunflykaraoke.com/',103,'','none',1)
         setView('movies', 'MAIN')
 
 def AtoZ(url,number,fanart):
@@ -170,7 +172,7 @@ def FAVOURITES(switch,name,iconimage,url):
         db.commit(); db.close()
         xbmc.executebuiltin('XBMC.Notification('+name.upper().replace('  ',' ')+',Added to Favorites,2000,'+IMAGE+')')
     if switch == 'delete':
-        name=name.upper().replace('[/COLOR]','').replace('[COLOR BLUE]','').replace('[COLOR GREY3]','').replace('  ',' ')
+        name=name.upper().replace('[/COLOR]','').replace('[COLOR '+font+']'+'','').replace('[COLOR GREY3]','').replace('  ',' ')
         cur.execute("DELETE FROM favourites WHERE track_name='%s'"%name.upper())
         db.commit(); db.close()
         xbmc.executebuiltin('XBMC.Notification('+name.upper().replace('  ',' ')+',Deleted from Favorites,2000,'+IMAGE+')')
@@ -180,7 +182,7 @@ def FAVOURITES(switch,name,iconimage,url):
         cached = cur.fetchall()
         if cached:
             for name,artist,track,iconimage,url in cached:
-                addLinkSF('[COLOR blue]%s ~ [/COLOR][COLOR grey3]%s[/COLOR]'%(name.split('~')[0],name.split('~')[1]),url,url.replace('.avi','.jpg'))
+                addLinkSF('[COLOR '+font+']'+'%s ~ [/COLOR][COLOR grey3]%s[/COLOR]'%(name.split('~')[0],name.split('~')[1]),url,url.replace('.avi','.jpg'))
         
 def GENRE(url):
         addDir('40s/50s',begurl+'40-s-and-50-s-pop3429190/'+endurl,10,art+'Genre/4050POP.png',art+'Main/Fanart_G.jpg',1)
@@ -293,11 +295,11 @@ def Next_Page(link):
     
     
 def SEARCH(url):
-        keyboard = xbmc.Keyboard('', '[COLOR white]Search[/COLOR] [COLOR blue]X[/COLOR][COLOR white]unity Karaoke[/COLOR] ')
+        keyboard = xbmc.Keyboard('', '[COLOR white]Search[/COLOR] [COLOR '+font+']'+'X[/COLOR][COLOR white]unity Karaoke[/COLOR] ')
         keyboard.doModal()
         if keyboard.isConfirmed() and len(keyboard.getText())>0:
            html=OPEN_URL('http://m.youtube.com/results?gl=GB&client=mv-google&hl=en-GB&q=%s+karaoke&submit=Search' % (keyboard.getText().replace(' ','+')))
-        else: addDir('[COLOR blue][B]Nothing found[/B][/COLOR]',url,19,'','',1);return
+        else: addDir('[COLOR '+font+']'+'[B]Nothing found[/B][/COLOR]',url,19,'','',1);return
         link=html.split('data-context-item-id=')
         for links in link:
             if not '__video_id__' or not '__title__' in links:
@@ -312,7 +314,7 @@ def SEARCH(url):
             match1=re.compile('href="(.+?)".+?">Next ').findall(html)
             nxtp=match1[0]
             nextpage='http://m.youtube.com'+str(nxtp)
-            addDir('[COLOR blue][B]Next Page >>[/B][/COLOR]',nextpage,11,art+'next.png','','')
+            addDir('[COLOR '+font+']'+'[B]Next Page >>[/B][/COLOR]',nextpage,11,art+'next.png','','')
         setView('movies', 'VIDEO')
                                                                                 
 def ARTIST_INDEX(url, iconimage):
@@ -356,7 +358,7 @@ def TRACK_INDEX(url, iconimage):
                 setView('movies', 'DEFAULT')
         try:
                 url='http://www.sunflykaraoke.com'+str(nextpageurl)
-                name= '[COLOR blue][B]Next Page >>[/B][/COLOR]'
+                name= '[COLOR '+font+']'+'[B]Next Page >>[/B][/COLOR]'
                 addDir(name,url,7,art+'next.png','none',1)    
                 setView('movies', 'DEFAULT') 
         except:
@@ -374,7 +376,7 @@ def GENRE_INDEX(name,url, iconimage):
             setView('movies', 'DEFAULT')
         try:
                 url='http://www.sunflykaraoke.com'+str(nextpageurl)
-                name= '[COLOR blue][B]Next Page >>[/B][/COLOR]'
+                name= '[COLOR '+font+']'+'[B]Next Page >>[/B][/COLOR]'
                 addDir(name,url,7,art+'next.png','none',1)    
                 setView('movies', 'DEFAULT') 
         except:
@@ -389,11 +391,11 @@ def GENRE_INDEXSF(name,url, iconimage):
             passto = re.sub('[\(\)\{\}<>]', '', name.replace("&#39;","'") .replace("&amp;","and") .replace("&#252;","u") .replace("&quot;","").replace("&quot;",""))
             name = re.sub('[\(\)\{\}<>]', '', name.replace("&#39;","'") .replace("&amp;","and") .replace("&#252;","u") .replace("&quot;","").replace("&quot;","").replace("'",""))
             url = str(url).replace("&#39;","'") .replace("&amp;","and") .replace("&#252;","u") .replace("&quot;","") 
-            addDir('[COLOR blue]%s[/COLOR] - %s'%(passto,url),name,34,iconimage,art+'Main/Fanart_G.jpg',1)
+            addDir('[COLOR '+font+']'+'%s[/COLOR] - %s'%(passto,url),name,34,iconimage,art+'Main/Fanart_G.jpg',1)
             setView('movies', 'DEFAULT')
         try:
                 url='http://www.sunflykaraoke.com'+str(nextpageurl)
-                name= '[COLOR blue][B]Next Page >>[/B][/COLOR]'
+                name= '[COLOR '+font+']'+'[B]Next Page >>[/B][/COLOR]'
                 addDir(name,url,33,art+'next.png','none',1)    
                 setView('movies', 'DEFAULT') 
         except:
@@ -406,7 +408,7 @@ def SEARCH_GENRE(url,name):
     if not db: addLinkSF('[COLOR red]TRACK NOT AVAILABLE.[/COLOR]',url,'');return
     for sf,number,artist,track,icon,burl in db:
         if artist in name.split('-')[1].strip():
-            addLinkSF('[COLOR blue]%s ~ [/COLOR]%s'%(artist,track),burl,icon,split=1)
+            addLinkSF('[COLOR '+font+']'+'%s ~ [/COLOR]%s'%(artist,track),burl,icon,split=1)
         
 def YOUTUBE_SONG_INDEX(name, url, iconimage, fanart):
         url = str(url).replace(' ','+').replace('_','+')  
@@ -427,7 +429,7 @@ def YOUTUBE_SONG_INDEX(name, url, iconimage, fanart):
             match1=re.compile('href="(.+?)".+?">Next ').findall(html)
             nxtp=match1[0]
             nextpage='http://m.youtube.com'+str(nxtp)
-            addDir('[COLOR blue][B]Next Page >>[/B][/COLOR]',nextpage,11,art+'next.png','','')
+            addDir('[COLOR '+font+']'+'[B]Next Page >>[/B][/COLOR]',nextpage,11,art+'next.png','','')
         setView('movies', 'VIDEO')
             
 def TITLE_ORDERS_YOUTUBE(name, url,fanart):
@@ -449,7 +451,7 @@ def TITLE_ORDERS_YOUTUBE(name, url,fanart):
             match1=re.compile('href="(.+?)".+?">Next ').findall(html)
             nxtp=match1[0]
             nextpage='http://m.youtube.com'+str(nxtp)
-            addDir('[COLOR blue][B]Next Page >>[/B][/COLOR]',nextpage,11,art+'next.png','','')
+            addDir('[COLOR '+font+']'+'[B]Next Page >>[/B][/COLOR]',nextpage,11,art+'next.png','','')
         setView('movies', 'VIDEO')
         
         
@@ -496,7 +498,7 @@ def nextpage(url):
             match1=re.compile('href="(.+?)".+?">Next ').findall(html)
             nxtp=match1[0]
             nextpage='http://m.youtube.com'+str(nxtp)
-            addDir('[COLOR blue][B]Next Page >>[/B][/COLOR]',nextpage,11,art+'next.png','','')
+            addDir('[COLOR '+font+']'+'[B]Next Page >>[/B][/COLOR]',nextpage,11,art+'next.png','','')
         setView('movies', 'VIDEO')
             
 def addFile(file):
@@ -575,7 +577,7 @@ def get_params():
         
 
 def Sunflysearch(url):
-    keyboard = xbmc.Keyboard('', '[COLOR grey3]Search by[/COLOR] [COLOR blue]Artist[/COLOR] [COLOR grey3]or[/COLOR] [COLOR blue]Track[/COLOR]')
+    keyboard = xbmc.Keyboard('', '[COLOR grey3]Search by[/COLOR] [COLOR '+font+']'+'Artist[/COLOR] [COLOR grey3]or[/COLOR] [COLOR '+font+']'+'Track[/COLOR]')
     keyboard.doModal()
     if keyboard.isConfirmed():
         db=GRABBER(4,'artist',keyboard.getText())
@@ -584,7 +586,7 @@ def Sunflysearch(url):
         if not db: db=GRABBER(4,'track',re.sub('\A(a|A|the|THE|The)\s','',keyboard.getText()))
         if not db: addLinkSF('[COLOR red]TRACK NOT AVAILABLE.[/COLOR]',url,'');return
         for sf,number,artist,track,icon,burl in db:
-            addLinkSF('[COLOR blue]%s ~ [/COLOR]%s'%(artist,track),burl,icon)
+            addLinkSF('[COLOR '+font+']'+'%s ~ [/COLOR]%s'%(artist,track),burl,icon)
     
                 
              
@@ -592,7 +594,7 @@ def AZ_ARTIST_SEARCH(name):
     db=GRABBER(5,'artist',name)
     if not db: addLinkSF('[COLOR red]ARTIST NOT AVAILABLE.[/COLOR]',url,'');return
     for sf,number,artist,track,icon,burl in db:
-            addLinkSF('[COLOR blue]%s ~ [/COLOR]%s'%(artist,track),burl,icon,split=1)
+            addLinkSF('[COLOR '+font+']'+'%s ~ [/COLOR]%s'%(artist,track),burl,icon,split=1)
     
 def SF_SEARCH(url):
     sunfly = 'SF'
@@ -602,14 +604,14 @@ def SF_SEARCH(url):
         db=GRABBER(4,'sunfly_name',keyboard.getText())
         if not db: addLinkSF('[COLOR red]DISC NOT AVAILABLE.[/COLOR]',url,'');return
         for sf,number,artist,track,icon,burl in db:
-            addLinkSF('[COLOR blue]%s:-%s ~ [/COLOR]%s'%(sf,number,track),burl,icon,split=1)
+            addLinkSF('[COLOR '+font+']'+'%s:-%s ~ [/COLOR]%s'%(sf,number,track),burl,icon,split=1)
         
         
 def AZ_TRACK_SEARCH(name):
     db=GRABBER(5,'track',re.sub('\A(a|A|the|THE|The)\s','',name))
     if not db: addLinkSF('[COLOR red]TRACK NOT AVAILABLE.[/COLOR]',url,'');return
     for sf,number,artist,track,icon,burl in db:
-            addLinkSF('[COLOR blue]%s ~ [/COLOR]%s'%(track,artist),burl,icon,split=0)    
+            addLinkSF('[COLOR '+font+']'+'%s ~ [/COLOR]%s'%(track,artist),burl,icon,split=0)    
         
 def addDir(name,url,mode,iconimage,fanart,number):
         u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&iconimage="+urllib.quote_plus(iconimage)+"&fanart="+urllib.quote_plus(fanart)+"&number="+str(number)

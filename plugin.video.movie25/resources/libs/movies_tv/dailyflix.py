@@ -10,7 +10,7 @@ art = main.art
 
 def LISTSP3(murl):
         if murl == 'HD':
-                url='http://www.dailyflix.net/index.php?/forum/196-hd-movies-2012-2013/page__sort_key__last_post__sort_by__Z-A'
+                url='http://board.dailyflix.net/index.php?/forum/196-hd-movies-2012-2013/page__sort_key__last_post__sort_by__Z-A'
         link=main.OPENURL(url)
         link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','').replace('&#38;','&')
         match=re.compile('<a itemprop=".+?" id=".+?" href="([^<]+)" title=.+? class=.+?><span itemprop="name">(.+?)</span>').findall(link)
@@ -54,7 +54,7 @@ def LINKSP3(mname,url):
         import urlresolver
         main.CloseAllDialogs()
         for murl in match:
-                host=re.compile("http://(.+?).com/.+?").findall(murl)
+                host=re.compile("http://(.+?)\.[^/]+?/.+?").findall(murl)
                 for hname in host:
                         hname=hname.replace('www.','').title()
                         hosted_media = urlresolver.HostedMediaFile(url=murl, title="[COLOR blue]" + hname + "[/COLOR]")
@@ -72,11 +72,11 @@ def LINKSP3(mname,url):
                         return
                 infoL={'Title': infoLabels['title'], 'Plot': infoLabels['plot'], 'Genre': infoLabels['genre']}
                 # play with bookmark
-                from universal import playbackengine
+                from resources.universal import playbackengine
                 player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type=video_type, title=str(infoLabels['title']),season=str(season), episode=str(episode), year=str(infoLabels['year']),img=img,infolabels=infoL, watchedCallbackwithParams=main.WatchedCallbackwithParams,imdb_id=imdb_id)
                 #WatchHistory
                 if selfAddon.getSetting("whistory") == "true":
-                    from universal import  watchhistory
+                    from resources.universal import  watchhistory
                     wh = watchhistory.WatchHistory('plugin.video.movie25')
                     wh.add_item(mname+' '+'[COLOR green]DailyFix[/COLOR]', sys.argv[0]+sys.argv[2], infolabels=infolabels, img=img, fanart=fanart, is_folder=False)
                 player.KeepAlive()

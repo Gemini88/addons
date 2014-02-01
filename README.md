@@ -1,4 +1,0 @@
-addons
-======
-
-wizard addons

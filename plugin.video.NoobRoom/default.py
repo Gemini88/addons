@@ -281,13 +281,12 @@ def KidsZone():
 def SearchXml(SearchText):
     (jc, link) = GetContent(nooblink + "/search.php?q=" + SearchText, "", nooblink, cj)
     match = re.compile(
-        '<br>(.+?)- <a class=\'tippable\' [^>]*href=["\']?([^>^"^\']+)["\']?[^>]*>(.+?)</a>'
+        '<a class=\'tippable\' [^>]*href=["\']?([^>^"^\']+)["\']?[^>]*>(.+?)</a>(.+?)<br>'
     ).findall(link)
-
     for i in range(len(match)):
-        (movieYear, moviehref, movieName) = match[i]
+        ( moviehref, movieName,movieYear) = match[i]
         href = moviehref.replace("?", "")
-        addLink('%s (%s)' % (urllib.unquote_plus(movieName), movieYear), href, 6, nooblink + "/2img" + href + ".jpg")
+        addLink('%s %s' % (urllib.unquote_plus(movieName), movieYear), href, 6, nooblink + "/2img" + href + ".jpg")
 
 def ParseXML(year, url, name, doc, mlist):
     movie = doc.createElement("movie")

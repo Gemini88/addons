@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="repository.mikey1234" name="Mikey1234 Repository" version="1.0.2" provider-name="Mikey1234">
-	<extension point="xbmc.addon.repository" name="XBMCHUB.com Addon Repository">
+<addon id="repository.mikey1234" name="[COLOR blue].[/COLOR][COLOR red]M[/COLOR][COLOR yellow]i[/COLOR][COLOR magenta]k[/COLOR][COLOR lime]e[/COLOR][COLOR white]y[/COLOR][COLOR orange]1[/COLOR][COLOR blue]2[/COLOR][COLOR red]3[/COLOR][COLOR yellow]4[/COLOR] [COLOR magenta]R[/COLOR][COLOR lime]e[/COLOR][COLOR white]p[/COLOR][COLOR orange]o[/COLOR][COLOR blue]s[/COLOR][COLOR red]i[/COLOR][COLOR yellow]t[/COLOR][COLOR magenta]o[/COLOR][COLOR lime]r[/COLOR][COLOR white]y[/COLOR]" version="1.0.4" provider-name="Mikey1234">
+	<extension point="xbmc.addon.repository" name="Mikey1234 Addon Repository">
 		<info compressed="false">http://mikey1234-repo.googlecode.com/svn/addons/addons.xml</info>
 		<checksum>http://mikey1234-repo.googlecode.com/svn/addons/addons.xml.md5</checksum>
 		<datadir zip="true">http://mikey1234-repo.googlecode.com/svn/addons</datadir>

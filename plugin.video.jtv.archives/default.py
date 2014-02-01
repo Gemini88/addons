@@ -333,12 +333,12 @@ def display_channel_archives(name, url=None):
                                        k in i.keys() if i[k]])
             stream_url = i['video_file_url']
             thumb = i['image_url_medium']
-            info['title'] = i['title']
+            info['title'] = i['title'].encode('utf-8')
             if i.has_key('broadcast_part') and i['broadcast_part']:
-                info['title'] += ' - Part: %s' %i['broadcast_part']
+                info['title'] += ' - Part: %s' %i['broadcast_part'].encode('utf-8')
             if i.has_key('length') and i['length']:
                 info['duration'] = int(i['length']) / 60
-            add_dir(info['title'], stream_url, thumb, 'set_resolved_url', info, get_stream_info(i))
+            add_dir(info['title'], stream_url, thumb, 'set_archive_url', info, get_stream_info(i))
 
         if len(data) == 20:
             if not 'offset=' in url:
@@ -467,7 +467,7 @@ def add_dir(name, url, iconimage, mode, info={}, stream_info={}):
              'XBMC.RunPlugin(%s?mode=add_favorite&params=%s&info=%s)'
              %(sys.argv[0], urllib.quote(json.dumps(params)),
                urllib.quote(json.dumps(info)))))
-    if mode in ['resolve_url', 'set_resolved_url']:
+    if mode in ['resolve_url', 'set_resolved_url', 'set_archive_url']:
         isfolder = False
         listitem.setProperty('IsPlayable', 'true')
         listitem.setInfo('video', infoLabels=info)
@@ -754,7 +754,7 @@ elif mode == 'add_favorite':
 elif mode == 'remove_fav':
     remove_favorite(params['name'])
 
-elif mode == 'set_resolved_url':
+elif mode == 'set_archive_url':
     set_resolved_url(params['url'])
 
 elif mode == 'get_justin_favorites':

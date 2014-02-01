@@ -6,7 +6,7 @@ from resources.libs import main
 #Mash Up - by Mash2k3 2012.
 
 from t0mm0.common.addon import Addon
-from universal import playbackengine, watchhistory
+from resources.universal import playbackengine, watchhistory
 addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 addon = Addon('plugin.video.movie25', sys.argv)
@@ -16,12 +16,12 @@ wh = watchhistory.WatchHistory('plugin.video.movie25')
 
 def MAINdz():
         main.GA("Plugin","dubzonline")
-        main.addDir('A-Z','http://www.dubzonline.net/anime-list/',614,art+'/wfs/az.png')
+        main.addDir('A-Z','http://www.dubzonline.net/anime-list/',614,art+'/AZ.png')
         main.addLink('[COLOR red]Recently Added Episodes[/COLOR]','year','')
         link=main.OPENURL('http://www.dubzonline.net/')
         link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','').replace('<li><a href="/anime-list/" ><span>Anime List</span></a></li>','').replace('<li><a href="/contact-us/" ><span>Contact Us</span></a></li>','').replace('<li><a href="/" class="active"><span>Home</span></a></li>','')
-        bits = re.compile('<h3 class="sidetitle">Recently Added Episodes</h3>(.+?)</div>').findall(link)
-        match = re.compile('<li><a href="(.+?)" title="(.+?)">.+?</a></li>').findall(bits[0])
+        bits = re.compile('<div class="index-box-title">Latest Dubbed Episodes</div>(.+?)</div>').findall(link)
+        match = re.compile('<li><a href="(.+?)" title="(.+?)" >.+?</a> </li>').findall(bits[0])
         for url,name in match:
                 main.addPlayT(name,url,617,'','','','','','')
 
@@ -39,9 +39,9 @@ def latestLIST(murl):
                             main.addPlay(name,url,617,'')
        
 def AtoZdz():
-        main.addDir('0-9','http://www.dubzonline.net/anime-list/',615,art+'/wfs/09.png')
+        main.addDir('0-9','http://www.dubzonline.net/anime-list/',615,art+'/09.png')
         for i in string.ascii_uppercase:
-            main.addDir(i,'http://www.dubzonline.net/anime-list/',615,art+'/wfs/'+i+'.png')
+            main.addDir(i,'http://www.dubzonline.net/anime-list/',615,art+'/'+i.lower()+'.png')
         main.GA("Tvshows","A-ZTV")
         main.VIEWSB()
 
@@ -66,7 +66,7 @@ def EPILIST(murl):
                 thumb=thumbs[0]
         else:
                 thumb=''
-        match = re.compile('<li><a href="(.+?)" rel="bookmark" title=".+?">(.+?)</a></li>').findall(link)
+        match = re.compile('href="([^<]+)" title="(.+?)">.+?</a></td>').findall(link)
         for url, name in match:
                     main.addPlayc(name,url,617,thumb,desc,'','','','')
 
@@ -77,7 +77,7 @@ def LINK(mname,murl):
 
         link=main.OPENURL(murl)
         link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
-        match = re.compile('''<span class='.+?'><b>.+?</b></span><iframe src="(.+?)"''').findall(link)
+        match = re.compile('''<iframe src="(http://www.putlocker.+?)"''').findall(link)
         for url in match:
                 match2=re.compile('http://(.+?)/.+?').findall(url)
                 for host in match2:

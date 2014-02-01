@@ -4,53 +4,52 @@ from resources.libs import main
 
 #Mash Up - by Mash2k3 2012.
 
-from t0mm0.common.addon import Addon
 addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
-addon = Addon('plugin.video.movie25', sys.argv)
 art = main.art
+prettyName = 'iWatchOnline'
 
 def AtoZiWATCHtv():
-    main.addDir('0-9','http://www.iwatchonline.to/tv-show?startwith=09&p=0',589,art+'/wfs/09.png')
+    main.addDir('0-9','http://www.iwatchonline.to/tv-show?startwith=09&p=0',589,art+'/09.png')
     for i in string.ascii_uppercase:
-            main.addDir(i,'http://www.iwatchonline.to/tv-show?startwith='+i.lower()+'&p=0',589,art+'/wfs/'+i+'.png')
+            main.addDir(i,'http://www.iwatchonline.to/tv-show?startwith='+i.lower()+'&p=0',589,art+'/'+i.lower()+'.png')
     main.GA("Tvshows","A-ZTV")
     main.VIEWSB()
 
 def AtoZiWATCHm():
     main.addDir('0-9','http://www.iwatchonline.to/movies?startwith=09&p=0',587,art+'/09.png')
     for i in string.ascii_uppercase:
-            main.addDir(i,'http://www.iwatchonline.to/movies?startwith='+i.lower()+'&p=0',587,art+'/'+i+'.png')
+            main.addDir(i,'http://www.iwatchonline.to/movies?startwith='+i.lower()+'&p=0',587,art+'/'+i.lower()+'.png')
     main.GA("Movies","A-ZM")
     main.VIEWSB()
 
 def iWatchMAIN():
-    main.addDir('Movies','http://www.iwatchonline.org/',586,art+'/wfs/iwatchm.png')
-    main.addDir('Tv Shows','http://www.iwatchonline.org/',585,art+'/wfs/iwatcht.png')
-    main.addDir('Todays Episodes','http://www.iwatchonline.to/tv-schedule',592,art+'/wfs/iwatcht.png')
+    main.addDir('Movies','http://www.iwatchonline.org/',586,art+'/iwatchm.png')
+    main.addDir('Tv Shows','http://www.iwatchonline.org/',585,art+'/iwatcht.png')
+    main.addDir('Todays Episodes','http://www.iwatchonline.to/tv-schedule',592,art+'/iwatcht.png')
     main.GA("Plugin","iWatchonline")
     main.VIEWSB2()
         
 def iWatchMOVIES():
-    main.addDir('Search Movies','http://www.iwatchonline.to',644,art+'/wfs/searchws.png')
-    main.addDir('A-Z','http://www.iwatchonline.to',595,art+'/wfs/azws.png')
-    main.addDir('Popular','http://www.iwatchonline.to/movies?sort=popular&p=0',587,art+'/wfs/iwatchm.png')
-    main.addDir('Latest Added','http://www.iwatchonline.to/movies?sort=latest&p=0',587,art+'/wfs/iwatchm.png')
-    main.addDir('Featured Movies','http://www.iwatchonline.to/movies?sort=featured&p=0',587,art+'/wfs/iwatchm.png')
-    main.addDir('Latest HD Movies','http://www.iwatchonline.to/movies?quality=hd&sort=latest&p=0',587,art+'/wfs/iwatchm.png')
-    main.addDir('Upcoming','http://www.iwatchonline.to/movies?sort=upcoming&p=0',587,art+'/wfs/iwatchm.png')
-    main.addDir('Genre','http://www.iwatchonline.to',596,art+'/wfs/genrews.png')
+    main.addDir('Search Movies','http://www.iwatchonline.to',644,art+'/search.png')
+    main.addDir('A-Z','http://www.iwatchonline.to',595,art+'/az.png')
+    main.addDir('Popular','http://www.iwatchonline.to/movies?sort=popular&p=0',587,art+'/iwatchm.png')
+    main.addDir('Latest Added','http://www.iwatchonline.to/movies?sort=latest&p=0',587,art+'/iwatchm.png')
+    main.addDir('Featured Movies','http://www.iwatchonline.to/movies?sort=featured&p=0',587,art+'/iwatchm.png')
+    main.addDir('Latest HD Movies','http://www.iwatchonline.to/movies?quality=hd&sort=latest&p=0',587,art+'/iwatchm.png')
+    main.addDir('Upcoming','http://www.iwatchonline.to/movies?sort=upcoming&p=0',587,art+'/iwatchm.png')
+    main.addDir('Genre','http://www.iwatchonline.to',596,art+'/genre.png')
     main.GA("iWatchonline","Movies")
     main.VIEWSB2()
 
 def iWatchTV():
-    main.addDir('Search TV Shows','http://www.iwatchonline.to',642,art+'/wfs/searchws.png')
-    main.addDir('A-Z','http://www.iwatchonline.to',593,art+'/wfs/azws.png')
-    main.addDir('Todays Episodes','http://www.iwatchonline.to/tv-schedule',592,art+'/wfs/iwatcht.png')
-    main.addDir('Featured Shows','http://www.iwatchonline.to/tv-show?sort=featured&p=0',589,art+'/wfs/iwatcht.png')
-    main.addDir('Popular Shows','http://www.iwatchonline.to/tv-show?sort=popular&p=0',589,art+'/wfs/iwatcht.png')
-    main.addDir('Latest Additions','http://www.iwatchonline.to/tv-show?sort=latest&p=0',589,art+'/wfs/iwatcht.png')
-    main.addDir('Genre','http://www.iwatchonline.to',594,art+'/wfs/genrews.png')
+    main.addDir('Search TV Shows','http://www.iwatchonline.to',642,art+'/search.png')
+    main.addDir('A-Z','http://www.iwatchonline.to',593,art+'/az.png')
+    main.addDir('Todays Episodes','http://www.iwatchonline.to/tv-schedule',592,art+'/iwatcht.png')
+    main.addDir('Featured Shows','http://www.iwatchonline.to/tv-show?sort=featured&p=0',589,art+'/iwatcht.png')
+    main.addDir('Popular Shows','http://www.iwatchonline.to/tv-show?sort=popular&p=0',589,art+'/iwatcht.png')
+    main.addDir('Latest Additions','http://www.iwatchonline.to/tv-show?sort=latest&p=0',589,art+'/iwatcht.png')
+    main.addDir('Genre','http://www.iwatchonline.to',594,art+'/genre.png')
     main.GA("iWatchonline","Tvshows")
     main.VIEWSB2()
 
@@ -68,6 +67,25 @@ def SearchhistoryTV():
             seahis=seahis.replace('%20',' ')
             url=seahis
             main.addDir(seahis,url,643,thumb)
+            
+def superSearch(encode,type):
+    try:
+        if type=='Movies': type='m'
+        else: type='t'
+        returnList=[]
+        search_url = 'http://www.iwatchonline.to/search'
+        from t0mm0.common.net import Net as net
+        search_content = net().http_POST(search_url, { 'searchquery' : encode, 'searchin' : type} ).content.encode('utf-8')
+        r = re.findall('(?s)<table(.+?)</table>',search_content)
+        r=main.unescapes(r[0])
+        match=re.compile('<img.+?src=\"(.+?)\".+?<a.+?href=\"(.+?)\">(.+?)</a>').findall(r)
+        for thumb,url,name in match:
+            if type=='m':
+                returnList.append((name,prettyName,url,thumb,588,True))
+            else:
+                returnList.append((name,prettyName,url,thumb,590,True))
+        return returnList
+    except: return []
 
 def SEARCHTV(murl = ''):
     encode = main.updateSearchFile(murl,'TV')
@@ -86,7 +104,7 @@ def SearchhistoryM():
     seapath=os.path.join(main.datapath,'Search')
     SeaFile=os.path.join(seapath,'SearchHistory25')
     if not os.path.exists(SeaFile):
-        SEARCHM()
+        SEARCHM('')
     else:
         main.addDir('Search Movies','###',645,art+'/search.png')
         main.addDir('Clear History',SeaFile,128,art+'/cleahis.png')
@@ -297,6 +315,14 @@ def GET_HTML(url):
     link = link.replace('\\','')
     return link
 
+def _decode_callback(matches):
+    id = matches.group(1)
+    try: return unichr(int(id))
+    except: return id
+
+def decode(data):
+    return re.sub("&#(\d+)(;|(?=\s))", _decode_callback, data).strip()
+
 def PANEL_REPLACER(content):
     panel_exists = True
     panel_id = 0
@@ -311,11 +337,10 @@ def PANEL_REPLACER(content):
             panel_id = panel_id + 1
         else:
             panel_exists = False
-    content = addon.unescape(content)
     content = main.unescapes(content)
     content = re.sub("\\\"", "\"", content)
-    from universal import _common as univ_common
-    content = univ_common.str_conv(addon.decode(content))
+    from resources.universal import _common as univ_common
+    content = univ_common.str_conv(decode(content))
     return content
 
 def iWatchEpisode(mname,murl):
@@ -367,8 +392,8 @@ def iWatchLINK(mname,url):
     movie_content = main.unescapes(link)
     movie_content = re.sub("\\\"", "\"", movie_content)
     movie_content=movie_content.replace('\'','')  
-    from universal import _common as univ_common
-    link2 = univ_common.str_conv(addon.decode(movie_content))
+    from resources.universal import _common as univ_common
+    link2 = univ_common.str_conv(decode(movie_content))
     if selfAddon.getSetting("hide-download-instructions") != "true":
         main.addLink("[COLOR red]For Download Options, Bring up Context Menu Over Selected Link.[/COLOR]",'','')
     links = re.search('<tbody>(.+?)</tbody>', link2)
@@ -416,13 +441,13 @@ def iWatchLINKB(mname,url):
             
         infoL={'Title': infoLabels['title'], 'Plot': infoLabels['plot'], 'Genre': infoLabels['genre'],'originalTitle': main.removeColoredText(infoLabels['title'])}
         # play with bookmark
-        from universal import playbackengine
+        from resources.universal import playbackengine
         player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type=video_type, title=str(infoLabels['title']),season=str(season), episode=str(episode), year=str(infoLabels['year']),img=img,infolabels=infoL, watchedCallbackwithParams=main.WatchedCallbackwithParams,imdb_id=imdb_id)
         #WatchHistory
         if selfAddon.getSetting("whistory") == "true":
-            from universal import watchhistory
+            from resources.universal import watchhistory
             wh = watchhistory.WatchHistory('plugin.video.movie25')
-            wh.add_item(hname+' '+'[COLOR green]iWatchonline[/COLOR]', sys.argv[0]+sys.argv[2], infolabels=infolabels, img=str(img), fanart=str(fanart), is_folder=False)
+            wh.add_item(hname+' '+'[COLOR green]'+prettyName+'[/COLOR]', sys.argv[0]+sys.argv[2], infolabels=infolabels, img=str(img), fanart=str(fanart), is_folder=False)
         player.KeepAlive()
         return ok
     except Exception, e:

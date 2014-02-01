@@ -9,7 +9,7 @@ addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 addon = Addon('plugin.video.movie25', sys.argv)
 art = main.art
-from universal import watchhistory
+from resources.universal import watchhistory
     
 wh = watchhistory.WatchHistory('plugin.video.movie25')
 
@@ -28,6 +28,24 @@ def VIPplaylists(murl):
                 fan=f[0]
         else:
                 fan=art+'/fanart2.jpg'
+        match=re.compile('<notify><new>(.+?)</new><message1>(.+?)</message1><message2>(.+?)</message2><message3>(.+?)</message3><old>(.+?)</old></notify>').findall(link)
+        if len(match)>0:
+            for new,mes1,mes2,mes3,old in match: continue
+            if new != ' ':
+                new=vip+new
+                runonce=os.path.join(main.datapath,'RunOnce')
+                notified=os.path.join(runonce,str(new))
+                if not os.path.exists(notified):
+                    open(notified,'w').write('version="%s",'%new)
+                    dialog = xbmcgui.Dialog()
+                    ok=dialog.ok('[B]'+vip+' Announcement![/B]', str(mes1) ,str(mes2),str(mes3))
+                if old != ' ':
+                    old=vip+old
+                    notified=os.path.join(runonce,str(old))
+                    if  os.path.exists(notified):
+                        os.remove(notified)
+            else: print 'No Messages'
+        else: print 'Github Link Down'
         match=re.compile('<name>(.+?)</name><link>(.+?)</link><thumbnail>(.+?)</thumbnail><date>(.+?)</date>').findall(link)
         for name,url,thumb,date in match:
             main.addDirc(name+' [COLOR red] Updated '+date+'[/COLOR]',url,182,thumb,'',fan,'','','')
@@ -66,7 +84,7 @@ def VIPList(mname,murl):
                 main.addDir(name,url,182,thumb)
         match=re.compile('<title>([^<]+)</title.+?link>(.+?)</link.+?thumbnail>([^<]+)</thumbnail>').findall(link)
         for name,url,thumb in sorted(match):
-            main.addPlayL(name+' [COLOR blue]'+vip+'[/COLOR]',url,183,thumb,'',fan,'','','')
+            main.addPlayL(name+' [COLOR blue]'+vip+'[/COLOR]',url,183,thumb,'',fan,'','','',secName=vip,secIcon=art+'/'+vip.lower()+'.png')
         main.GA(vip+"-Playlists",mname)
 
 def VIPLink(mname,murl,thumb):
@@ -76,6 +94,8 @@ def VIPLink(mname,murl,thumb):
         urllist=[]
         playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         playlist.clear()
+        if '</regex>'in murl: 
+                murl=main.doRegex(murl)
         match=re.compile('<sublink>(.+?)</sublink>').findall(murl)
         if match:
                 i=1
@@ -90,12 +110,13 @@ def VIPLink(mname,murl,thumb):
                         murl=urllist[int(answer)]
                         xbmc.executebuiltin("XBMC.Notification(Please Wait!,Opening Link,5000)")
                 else:
-                      return  
+                      return
+        
         stream_url = murl
         listitem = xbmcgui.ListItem(thumbnailImage=thumb)
-        listitem.setInfo('video', {'Title': mname, 'Genre': 'Live'} )
-        
-        playlist.add(stream_url,listitem)
+        infoL={'Title': mname, 'Genre': 'Live'} 
+        from resources.universal import playbackengine
+        player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type='movie', title=mname,season='', episode='', year='',img=thumb,infolabels=infoL, watchedCallbackwithParams='',imdb_id='')
         xbmcPlayer = xbmc.Player()
         xbmcPlayer.play(playlist)
         #WatchHistory

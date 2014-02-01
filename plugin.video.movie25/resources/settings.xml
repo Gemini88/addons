@@ -3,16 +3,17 @@
 
    <category label="General">
 		<setting id="meta-view" type="bool" label="[B]Metadata (Movies)[/B]" default="true"/>
-		<setting id="meta-view-tv" type="bool" label="[B]Metadata (TV Shows)[/B]" default="true"/>
+		<setting id="meta-view-tv" type="bool" label="[B]Metadata (TV Shows)[/B]" default="false"/>
 		<setting id="whistory" type="bool" label="[B]Watch History[/B]" default="true"/>
 		<setting id="gastatus" type="bool" label="[B]Google Analytics[/B]" default="true"/>
-		<setting id="artwork" type="bool" label="[B]8bit Artwork[/B] (Recommended for Raspberry PI & ATV's)" default="false"/>
+		<setting id="skin" type="enum" label="[B]Skin[/B]" values="VECTOR TH|GREEN MONSTER" default="0"/>
 		<setting id="groupfavs" type="bool" label="[B]Group Favorites[/B]" default="false"/>
 		<setting label="[B]Re-install last auto update[/B]" type="action" action="RunPlugin(plugin://plugin.video.movie25/?mode=1998&url=0)"/>
 		<setting label="External Settings" type="lsep" />
 		<setting label="Resolver Settings" type="action" action="Addon.OpenSettings(script.module.urlresolver)" enable="System.HasAddon(script.module.urlresolver)"/>
 		<setting label="MetaHandler Settings" type="action" action="Addon.OpenSettings(script.module.metahandler)" enable ="eq(-9,true) || eq(-8,true)" />
-		<setting label="Universal Settings (Watch History)" type="action" action="Addon.OpenSettings(script.module.universal)" enable="eq(-8,true)"/>
+		<setting label="Changelogs" type="lsep" />
+		<setting label="Auto update changelog" type="action" action="XBMC.RunScript(special://home/addons/plugin.video.movie25/resources/libs/changelog.py,Prod)"/>
    </category>
    
    <category label="Auto View">
@@ -30,6 +31,8 @@
    
    <category label="Home Layout">
 		<setting label="Customize your Home screen" type="lsep" />
+		<setting id="homeitem_36_enabled" type="bool" label="[B]Super Search[/B]" default="true"/>
+			<setting id="homeitem_36" type="number" label="     Order" default="5" visible="!eq(-1,false)"/>
 		<setting id="homeitem_1_enabled" type="bool" label="[B]Search (Movie25)[/B]" default="true"/>
 			<setting id="homeitem_1" type="number" label="     Order" default="10" visible="!eq(-1,false)"/>
 		<setting id="homeitem_2_enabled" type="bool" label="[B]Favorites[/B]" default="true"/>
@@ -62,6 +65,8 @@
 			<setting id="homeitem_15" type="number" label="     Order" default="150" visible="!eq(-1,false)"/>
 		<setting id="homeitem_16_enabled" type="bool" label="[B]TV Latest[/B]" default="true"/>
 			<setting id="homeitem_16" type="number" label="     Order" default="160" visible="!eq(-1,false)"/>
+		<setting id="homeitem_37_enabled" type="bool" label="[B]SideReel[/B]" default="false"/>
+			<setting id="homeitem_37" type="number" label="     Order" default="165" visible="!eq(-1,false)"/>
 		<setting id="homeitem_17_enabled" type="bool" label="[B]Live Section[/B]" default="true"/>
 			<setting id="homeitem_17" type="number" label="     Order" default="170" visible="!eq(-1,false)"/>
 		<setting id="homeitem_18_enabled" type="bool" label="[B]More Tv Shows & Movies[/B]" default="true"/>
@@ -90,6 +95,10 @@
 			<setting id="homeitem_29" type="number" label="     Order" default="290" visible="!eq(-1,false)"/>
 		<setting id="homeitem_30_enabled" type="bool" label="[B]Staael 1982[/B]" default="false"/>
 			<setting id="homeitem_30" type="number" label="     Order" default="300" visible="!eq(-1,false)"/>
+		<setting id="homeitem_35_enabled" type="bool" label="[B]Demon88 Movies[/B]" default="false"/>
+			<setting id="homeitem_35" type="number" label="     Order" default="301" visible="!eq(-1,false)"/>
+		<setting id="homeitem_38_enabled" type="bool" label="[B]ONE242415[/B]" default="false"/>
+			<setting id="homeitem_38" type="number" label="     Order" default="302" visible="!eq(-1,false)"/>
 		<setting id="homeitem_31_enabled" type="bool" label="[B]Custom XML Channels[/B]" default="false"/>
 			<setting id="homeitem_31" type="number" label="     Order" default="310" visible="!eq(-1,false)"/>
 		<setting id="homeitem_32_enabled" type="bool" label="[B]K1M05[/B]" default="false"/>
@@ -114,12 +123,24 @@
 		<setting label="Noobroom Account" type="lsep" />
 		<setting id="username" type="text" label="Noobroom Email" default="" visible="true"/>
 		<setting id="password" type="text"label="Noobroom Password" default="" visible="true" option="hidden" />
+		<setting label="SideReel Account" type="lsep" />
+		<setting id="srusername" type="text" label="SideReel Username" default="" visible="true"/>
+		<setting id="srpassword" type="text"label="SideReel Password" default="" visible="true" option="hidden" />
 		<setting label="RLSMIX Account" type="lsep" />
 		<setting id="rlsusername" type="text" label="RlsMix Username" default="" visible="true"/>
 		<setting id="rlspassword" type="text"label="RlsMix Password" default="" visible="true" option="hidden" />
-		<setting label="HM VIP++ Account" type="lsep" />
-		<setting id="hmvusername" type="text" label="HM VIP++ Username" default="" visible="true"/>
-		<setting id="hmvpassword" type="text"label="HM VIP++ Password" default="" visible="true" option="hidden" />
+		<setting id="ddtv_my" type="bool" label="Show My Shows in TV Latest" default="false" visible="!eq(-1,) + !eq(-2,)"/>
+		<setting id="ddtv_hdtv720p" type="bool" label="HDTV 720p" default="true" visible="!eq(-2,) + !eq(-3,)"/>
+		<setting id="ddtv_webdl720p" type="bool" label="Web-DL 720p" default="true" visible="!eq(-3,) + !eq(-4,)"/>
+		<setting id="ddtv_webdl1080p" type="bool" label="Web-DL 1080p" default="true" visible="!eq(-4,) + !eq(-5,)"/>
+		<setting id="ddtv_hdtv480p" type="bool" label="HDTV 480p" default="true" visible="!eq(-5,) + !eq(-6,)"/>
+		<setting id="ddtv_pdtv" type="bool" label="PDTV" default="false" visible="!eq(-6,) + !eq(-7,)"/>
+		<setting id="ddtv_dsr" type="bool" label="DSR" default="false" visible="!eq(-7,) + !eq(-8,)"/>
+		<setting id="ddtv_dvdrip" type="bool" label="DVDRip" default="false" visible="!eq(-8,) + !eq(-9,)"/>
+		<setting label="GitHub Account" type="lsep" />
+		<setting id="ghusername" type="text" label="GitHub Username" default="" visible="true"/>
+		<setting id="ghpassword" type="text"label="GitHub Password" default="" visible="true" option="hidden" />
+		
    </category>
    <category label="Video Quality">
 		<setting id="bit-disc"	type="enum" label="[B]Discovery Bitrate[/B]" values="3500k|1500k|600k" default="0"/>
@@ -127,6 +148,7 @@
 		<setting id="tsn-qua"	type="enum" label="[B]TSN & FOX Bitrate[/B]" values="High|Medium|Low" default="0"/>
 		<setting id="wild-qua"	type="enum" label="[B]Wild Tv Bitrate[/B]" values="High|Low" default="0"/>
 		<setting id="disj-qua"	type="enum" label="[B]Disney Jr. Bitrate[/B]" values="High|Medium|Low" default="0"/>
+		<setting id="espn-qua" type="select" label="[B]ESPN Bitrate[/B]" values="272p30_448k|324p30_948k|360p30_1464k|432p30_2096k|720p30_2896k" default="720p30_2896k"/>
    </category>
    
    <category label="Downloads">
@@ -137,10 +159,15 @@
 		<setting id="hide-download-instructions" type="bool" label="[B]Hide Download Instructions[/B]" default="false"/>
    </category>
    
-   <category label="Emergency FIX">
-   <setting label="Do not apply unless told by developer" type="lsep" />
-   <setting label="Fix Database Malformed Error" type="action" action="XBMC.RunScript(special://home/addons/plugin.video.movie25/resources/fixes/malformedFix.py)"/>
-   <setting label="Fix Metahandler mkdirs Error [COLOR red](EDEN Only)[/COLOR]" type="action" action="XBMC.RunScript(special://home/addons/plugin.video.movie25/resources/fixes/mkdirsFix.py)"/>
+   <category label="Maintenance">
+		<setting label="Fix Database Malformed Error" type="action" action="XBMC.RunScript(special://home/addons/plugin.video.movie25/resources/fixes/malformedFix.py)"/>
+		<setting label="Imports Doctor" type="action" action="XBMC.RunScript(special://home/addons/plugin.video.movie25/resources/fixes/importsDoctor.py)"/>
+		<setting type="lsep" label="Uploads your Log to xbmclogs.com"/>
+		<setting label="[B]Upload Log[/B]" type="action" action="XBMC.RunScript(special://home/addons/plugin.video.movie25/resources/fixes/addon.py)"/>
+		<setting id="email" type="text" label="Email address"/>
+		<setting type="lsep" label="If you want to receive an email containing direct links"/>
+		<setting type="lsep" label="to your uploaded logs you have to set your email address"/>
+		
 		
    </category>
 </settings>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.MikeysKaraoke" name="Mikey's Karaoke" version="4.6.3" provider-name="Mikey1234">
+<addon id="plugin.video.MikeysKaraoke" name="Mikey's Karaoke" version="4.6.4" provider-name="Mikey1234">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
     <import addon="plugin.video.youtube"/>

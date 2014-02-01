@@ -12,15 +12,14 @@ hostlist = None
 Dir = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.movie25', ''))
 repopath = xbmc.translatePath(os.path.join('special://home/addons/repository.mash2k3', ''))
 datapath = xbmc.translatePath(selfAddon.getAddonInfo('profile'))
-supportsite = 'xunitytalk.com'
-hosts = 'putlocker,sockshare,billionuploads,hugefiles,mightyupload,movreel,lemuploads,180upload,megarelease,filenuke,flashx,gorillavid,bayfiles,veehd,vidto,videomega,epicshare,bayfiles,2gbhosting,alldebrid,allmyvideos,vidspot,castamp,cheesestream,clicktoview,crunchyroll,cyberlocker,daclips,dailymotion,divxstage,donevideo,ecostream,entroupload,facebook,filebox,hostingbulk,hostingcup,jumbofiles,limevideo,movdivx,movpod,movshare,movzap,muchshare,nolimitvideo,nosvideo,novamov,nowvideo,ovfile,play44_net,played,playwire,premiumize_me,primeshare,promptfile,purevid,rapidvideo,realdebrid,rpnet,seeon,sharefiles,sharerepo,sharesix,skyload,stagevu,stream2k,streamcloud,thefile,tubeplus,tunepk,ufliq,upbulk,uploadc,uploadcrazynet,veoh,vidbull,vidcrazynet,video44,videobb,videofun,videotanker,videoweed,videozed,videozer,vidhog,vidpe,vidplay,vidstream,vidup,vidx,vidxden,vidzur,vimeo,vureel,watchfreeinhd,xvidstage,yourupload,youtube,youwatch,zalaa,zooupload,zshare'
-##from http://real-debrid.com/api/hosters.php
-rdhosts = '1fichier.com,desfichiers.com,1st-files.com,2shared.com,4shared.com,aetv.com,albafile.com,asfile.com,bayfiles.com,bitshare.com,canalplus.fr,cbs.com,cloudzer.net,crocko.com,cwtv.com,dailymotion.com,dengee.net,depfile.com,i-filez.com,dizzcloud.com,dl.free.fr,extmatrix.com,filebox.com,filecloud.io,filefactory.com,fileflyer.com,fileover.net,fileparadox.in,filepost.com,filerio.com,filesabc.com,filesend.net,filesflash.com,filesflash.net,filesmonster.com,filestay.com,freakshare.net,gigasize.com,hipfile.com,hotfile.com,hugefiles.net,hulkshare.com,hulu.com,jumbofiles.com,justin.tv,letitbit.net,load.to,mediafire.com,mega.co.nz,megashares.com,mixturevideo.com,mixturecloud.com,netload.in,nowdownload.eu,nowdownload.ch,nowdownload.sx,nowvideo.eu,nowvideo.sx,nowvideo.ch,purevid.com,putlocker.com,rapidgator.net,rapidshare.com,redtube.com,rutube.ru,scribd.com,sendspace.com,share-online.biz,sharefiles.co,shareflare.net,sky.fm,slingfile.com,sockshare.com,soundcloud.com,speedyshare.com,turbobit.net,unibytes.com,uploaded.to,uploaded.net,ul.to,uploadhero.co,uploadhero.com,uploading.com,uptobox.com,userporn.com,veevr.com,vidhog.com,vimeo.com,vip-file.com,wat.tv,youporn.com,youtube.com,yunfile.com,zippyshare.com'
+supportsite = 'mashupxbmc.com'
+hosts = 'putlocker,sockshare,billionuploads,hugefiles,mightyupload,movreel,lemuploads,180upload,megarelease,filenuke,flashx,gorillavid,bayfiles,veehd,vidto,mailru,videomega,epicshare,bayfiles,2gbhosting,alldebrid,allmyvideos,vidspot,castamp,cheesestream,clicktoview,crunchyroll,cyberlocker,daclips,dailymotion,divxstage,donevideo,ecostream,entroupload,facebook,filebox,hostingbulk,hostingcup,jumbofiles,limevideo,movdivx,movpod,movshare,movzap,muchshare,nolimitvideo,nosvideo,novamov,nowvideo,ovfile,play44_net,played,playwire,premiumize_me,primeshare,promptfile,purevid,rapidvideo,realdebrid,rpnet,seeon,sharefiles,sharerepo,sharesix,skyload,stagevu,stream2k,streamcloud,thefile,tubeplus,tunepk,ufliq,upbulk,uploadc,uploadcrazynet,veoh,vidbull,vidcrazynet,video44,videobb,videofun,videotanker,videoweed,videozed,videozer,vidhog,vidpe,vidplay,vidstream,vidup,vidx,vidxden,vidzur,vimeo,vureel,watchfreeinhd,xvidstage,yourupload,youtube,youwatch,zalaa,zooupload,zshare'
 if selfAddon.getSetting('visitor_ga')=='':
     from random import randint
     selfAddon.setSetting('visitor_ga',str(randint(0, 0x7fffffff)))
 
-VERSION = "1.3.9"
+VERSION = "1.4.0"
+#PATH = "MashUp-DEV"  
 PATH = "MashUp-"            
 UATRACK="UA-38312513-1" 
 
@@ -40,26 +39,44 @@ except:
 
 sys.path.append( os.path.join( selfAddon.getAddonInfo('path'), 'resources', 'libs' ))
 ################################################################################ Common Calls ##########################################################################################################
-if selfAddon.getSetting("artwork") == "false":
-    art = 'https://raw.github.com/mash2k3/MashupArtwork/master/art'
+if selfAddon.getSetting("skin") == "0":
+    art = 'https://raw.github.com/mash2k3/MashupArtwork/master/skins/vector'
+    fanartimage=Dir+'fanart2.jpg'
 else:
-    art = 'https://raw.github.com/mash2k3/MashupArtwork/master/art256'
+    art = 'https://raw.github.com/mash2k3/MashupArtwork/master/skins/greenmonster'
+    fanartimage=Dir+'fanart.jpg'
 elogo = xbmc.translatePath('special://home/addons/plugin.video.movie25/resources/art/bigx.png')
 slogo = xbmc.translatePath('special://home/addons/plugin.video.movie25/resources/art/smallicon.png')
 
-def OPENURL(url, mobile = False, q = False, verbose = True):
+def OPENURL(url, mobile = False, q = False, verbose = True, timeout = 5, cookie = None, data = None):
     import urllib2 
     UserAgent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'
     try:
         print "MU-Openurl = " + url
-        req = urllib2.Request(url)
-        if mobile:
-            req.add_header('User-Agent', 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8A293 Safari/6531.22.7')
+        if cookie:
+            import cookielib
+            cookie_file = os.path.join(os.path.join(datapath,'Cookies'), cookie+'.cookies')
+            cj = cookielib.LWPCookieJar()
+            if os.path.exists(cookie_file):
+                try: cj.load(cookie_file,True)
+                except: cj.save(cookie_file,True)
+            else: cj.save(cookie_file,True)
+            opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
         else:
-            req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
+            opener = urllib2.build_opener()
+        if mobile:
+            opener.addheaders = [('User-Agent', 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8A293 Safari/6531.22.7')]
+        else:
+            opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')]
+        if data:
+            response = opener.open(url, urllib.urlencode(data), timeout)
+        else:
+            response = opener.open(url, timeout=timeout)
+        if cookie:
+            cj.save(cookie_file,True)
         link=response.read()
         response.close()
+        opener.close()
         #link = net(UserAgent).http_GET(url).content
         link=link.replace('&#39;',"'").replace('&quot;','"').replace('&amp;',"&").replace("&#39;","'").replace('&lt;i&gt;','').replace("#8211;","-").replace('&lt;/i&gt;','').replace("&#8217;","'").replace('&amp;quot;','"').replace('&#215;','x').replace('&#038;','&').replace('&#8216;','').replace('&#8211;','').replace('&#8220;','').replace('&#8221;','').replace('&#8212;','')
         link=link.replace('%3A',':').replace('%2F','/')
@@ -110,8 +127,9 @@ def REDIRECT(url):
         link=response.geturl()
         return link
 
-def Clearhistory(url):
-        os.remove(url)
+def Clearhistory(path):
+    if os.path.exists(path):
+        os.remove(path)
     
 def setGrab():
     global grab
@@ -122,59 +140,77 @@ def setGrab():
 def getFav():
     global fav
     if not fav:
-        from universal import favorites
+        from resources.universal import favorites
         fav = favorites.Favorites(addon_id, sys.argv)
     return fav
+
+def getRDHosts():
+    CachePath = os.path.join(datapath,'Cache')
+    CachedRDHosts = xbmc.translatePath(os.path.join(CachePath, 'rdhosts'))
+    rdhosts =  getFile(CachedRDHosts)
+    if not rdhosts or os.stat(CachedRDHosts).st_mtime + 86400 < time.time():
+        rdhosts = OPENURL('http://real-debrid.com/api/hosters.php').replace('"', '')
+        setFile(CachedRDHosts,rdhosts,True)
+    return rdhosts
 
 def getHostList():
     global hostlist
     if not hostlist:
         hostlist = hosts
         try: 
-            if xbmcaddon.Addon(id='script.module.urlresolver').getSetting("RealDebridResolver_enabled") == 'true': hostlist += rdhosts
+            if xbmcaddon.Addon(id='script.module.urlresolver').getSetting("RealDebridResolver_enabled") == 'true': hostlist += getRDHosts()
         except: pass
     return hostlist
 
 def unescapes(text):
-        try:
-            rep = {"%26":"&","&#38;":"&","&amp;":"&","&#044;": ",","&nbsp;": " ","\n": "","\t": "","\r": "","%5B": "[","%5D": "]","%3a": ":","%3A":":","%2f":"/","%2F":"/","%3f":"?","%3F":"?","%3d":"=","%3D":"=","%2C":",","%2c":",","%3C":"<","%20":" ","%22":'"',"%3D":"=","%3A":":","%2F":"/","%3E":">","%3B":",","%27":"'","%0D":"","%0A":"","%92":"'"}
-            for s, r in rep.items():
-                text = text.replace(s, r)
-
-            # remove html comments
-            text = re.sub(r"<!--.+?-->", "", text)    
-
-        except TypeError:
-            pass
-
-        return text
+    try:
+        rep = {"%26":"&","&#38;":"&","&amp;":"&","&#044;": ",","&nbsp;": " ","\n": "","\t": "","\r": "","%5B": "[","%5D": "]",
+               "%3a": ":","%3A":":","%2f":"/","%2F":"/","%3f":"?","%3F":"?","%3d":"=","%3D":"=","%2C":",","%2c":",","%3C":"<",
+               "%20":" ","%22":'"',"%3D":"=","%3A":":","%2F":"/","%3E":">","%3B":",","%27":"'","%0D":"","%0A":"","%92":"'",
+               "&lt;": "<","&gt;": ">","&quot": '"',"&rsquo;": "'","&acute;": "'"}
+        for s, r in rep.items():
+            text = text.replace(s, r)
+        text = re.sub(r"<!--.+?-->", "", text)    
+    except TypeError: pass
+    return text
 
 def removeColorTags(text):
-        return re.sub('\[COLOR[^\]]{,15}\]','',text.replace("[/COLOR]", ""),re.I|re.DOTALL).strip()
+    return re.sub('\[COLOR[^\]]{,15}\]','',text.replace("[/COLOR]", ""),re.I|re.DOTALL).strip()
     
 def removeColoredText(text):
-        return re.sub('\[COLOR.*?\[/COLOR\]','',text,re.I|re.DOTALL).strip()
+    return re.sub('\[COLOR.*?\[/COLOR\]','',text,re.I|re.DOTALL).strip()
 
 def SwitchUp():
-        if selfAddon.getSetting("switchup") == "false":
-            selfAddon.setSetting(id="switchup", value="true")
-        else:
-            selfAddon.setSetting(id="switchup", value="false")
-        xbmc.executebuiltin("XBMC.Container.Refresh")
+    if selfAddon.getSetting("switchup") == "false":
+        selfAddon.setSetting(id="switchup", value="true")
+    else:
+        selfAddon.setSetting(id="switchup", value="false")
+    xbmc.executebuiltin("XBMC.Container.Refresh")
 
 def ErrorReport(e):
-        elogo = xbmc.translatePath('special://home/addons/plugin.video.movie25/resources/art/bigx.png')
-        xbmc.executebuiltin("XBMC.Notification([COLOR=FF67cc33]Mash Up Error[/COLOR],"+str(e)+",10000,"+elogo+")")
-        xbmc.log('***********Mash Up Error: '+str(e)+'**************', xbmc.LOGERROR)
+    elogo = xbmc.translatePath('special://home/addons/plugin.video.movie25/resources/art/bigx.png')
+    xbmc.executebuiltin("XBMC.Notification([COLOR=FF67cc33]Mash Up Error[/COLOR],"+str(e)+",10000,"+elogo+")")
+    xbmc.log('***********Mash Up Error: '+str(e)+'**************', xbmc.LOGERROR)
         
 def CloseAllDialogs():
-        xbmc.executebuiltin("XBMC.Dialog.Close(all,true)")
+    xbmc.executebuiltin("XBMC.Dialog.Close(all,true)")
         
-def ClearDir(dir):
+def ClearDir(dir, clearNested = False):
     for the_file in os.listdir(dir):
         file_path = os.path.join(dir, the_file)
-        try:os.unlink(file_path)
-        except Exception, e: print str(e)
+        if clearNested and os.path.isdir(file_path):
+            ClearDir(file_path, clearNested)
+            try: os.rmdir(file_path)
+            except Exception, e: print str(e)
+        else:
+            try:os.unlink(file_path)
+            except Exception, e: print str(e)
+
+def removeFile(file):
+    try: 
+        if os.path.exists(file): os.remove(file)
+        return True
+    except: return False
         
 def getFileName(file):
     return re.sub('.*?([\w-]+)\.[^\.]+$','\\1',file)   
@@ -186,8 +222,8 @@ def getFile(path):
         except: pass
     return content
    
-def setFile(path,content):
-    if os.path.exists(path):
+def setFile(path,content,force=False):
+    if os.path.exists(path) and not force:
         return False
     else:
         try:
@@ -196,15 +232,29 @@ def setFile(path,content):
         except: pass
     return False 
 
-def downloadFile(url,dest,silent = False):
+def downloadFile(url,dest,silent = False,cookie = None):
     try:
         import urllib2
         file_name = url.split('/')[-1]
         print "Downloading: %s" % (file_name)
-        u = urllib2.urlopen(url)
+        if cookie:
+            import cookielib
+            cookie_file = os.path.join(os.path.join(datapath,'Cookies'), cookie+'.cookies')
+            cj = cookielib.LWPCookieJar()
+            if os.path.exists(cookie_file):
+                try: cj.load(cookie_file,True)
+                except: cj.save(cookie_file,True)
+            else: cj.save(cookie_file,True)
+            opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+        else:
+            opener = urllib2.build_opener()
+        opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')]
+        u = opener.open(url)
         f = open(dest, 'wb')
         meta = u.info()
-        file_size = int(meta.getheaders("Content-Length")[0])
+        if meta.getheaders("Content-Length"):
+            file_size = int(meta.getheaders("Content-Length")[0])
+        else: file_size = 'Unknown'
         file_size_dl = 0
         block_sz = 8192
         while True:
@@ -219,6 +269,7 @@ def downloadFile(url,dest,silent = False):
         f.close()
         return True
     except Exception, e:
+        print 'Error downloading file ' + url.split('/')[-1]
         main.ErrorReport(e)
         if not silent:
             dialog = xbmcgui.Dialog()
@@ -250,6 +301,9 @@ def updateSearchFile(searchQuery,searchType,defaultValue = '###',searchMsg = '')
     else:
         addToSearchHistory = False
     searchQuery=urllib.quote(searchQuery)
+    if os.path.exists(SearchFile):
+        searchitems=re.compile('search="([^"]+?)",').findall(open(SearchFile,'r').read())
+        if searchitems.count(searchQuery) > 0: addToSearchHistory = True
     if addToSearchHistory:
         if not os.path.exists(SearchFile) and searchQuery != '':
             open(SearchFile,'w').write('search="%s",'%searchQuery)
@@ -392,7 +446,7 @@ def GETMETAT(mname,genre,fan,thumb,plot='',imdb='',tmdb=''):
         mname = re.sub(r'\[COLOR red\]\(?(\d{4})\)?\[/COLOR\]',r'\1',mname)
         mname = removeColoredText(mname)
         mname = mname.replace(' EXTENDED and UNRATED','').replace('Webrip','').replace('MaxPowers','').replace('720p','').replace('1080p','').replace('TS','').replace('HD','').replace('R6','').replace('H.M.','').replace('HackerMil','').replace('(','').replace(')','').replace('[','').replace(']','')
-        mname = mname.replace(' Extended Cut','')
+        mname = mname.replace(' Extended Cut','').replace('Awards Screener','')
         mname = re.sub('Cam(?![A-Za-z])','',mname)
         mname = re.sub('(?i)3-?d h-?sbs','',mname)
         mname = mname.strip()
@@ -420,7 +474,7 @@ def GETMETAT(mname,genre,fan,thumb,plot='',imdb='',tmdb=''):
         if infoLabels['cover_url']=='':
             infoLabels['cover_url']=thumb
         if infoLabels['backdrop_url']=='':
-            if fan=='': fan=Dir+'fanart.jpg'
+            if fan=='': fan=fanartimage
             else: fan=fan
             infoLabels['backdrop_url']=fan
         if meta['overlay'] == 7: infoLabels['playcount'] = 1
@@ -436,7 +490,7 @@ def GETMETAT(mname,genre,fan,thumb,plot='',imdb='',tmdb=''):
         else: infoLabels['plot'] = infoLabels['plot'] + formatCast(infoLabels['cast'])
     else:
         if thumb=='': thumb=art+'/vidicon.png'
-        if fan=='': fan=Dir+'fanart.jpg'
+        if fan=='': fan=fanartimage
         else: fan=fan
         infoLabels = {'title': mname,'metaName': mname,'cover_url': thumb,'backdrop_url': fan,'season': '','episode': '','year': '','plot': '','genre': genre,'imdb_id': '','tmdb_id':''}
     return infoLabels
@@ -487,7 +541,7 @@ def GETMETAEpiT(mname,thumb,desc):
                             infoLabels['cover_url']=thumb
                            
                 if infoLabels['backdrop_url']=='':
-                        fan=Dir+'fanart.jpg'
+                        fan=fanartimage
                         infoLabels['backdrop_url']=fan
                 if infoLabels['cover_url']=='':
                     if thumb=='':
@@ -507,7 +561,7 @@ def GETMETAEpiT(mname,thumb,desc):
                 infoLabels['title']=originalName
                    
         else:
-                fan=Dir+'fanart.jpg'
+                fan=fanartimage
                 infoLabels = {'title': originalName,'metaName': mname,'cover_url': thumb,'backdrop_url': fan,'season': '','episode': '','year': '','plot': desc,'genre': '','imdb_id': ''}       
         
         return infoLabels
@@ -1061,6 +1115,9 @@ checkGA()
 def addDirX(name,url,mode,iconimage,plot='',fanart='',dur=0,genre='',year='',imdb='',tmdb='',isFolder=True,searchMeta=False,addToFavs=True,
             id=None,fav_t='',fav_addon_t='',fav_sub_t='',metaType='Movies',menuItemPos=None,menuItems=None,down=False,replaceItems=True):
     u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&iconimage="+urllib.quote_plus(iconimage)+"&plot="+urllib.quote_plus(plot)+"&fanart="+urllib.quote_plus(fanart)+"&genre="+urllib.quote_plus(genre)
+    if 'http://api.video.mail.ru/videos/embed/' in url or mode==364:
+        name=name.decode('windows-1251')
+        plot=plot.decode('windows-1251')
     if searchMeta:
         if metaType == 'TV':
             infoLabels = GETMETAEpiT(name,iconimage,plot)
@@ -1069,7 +1126,7 @@ def addDirX(name,url,mode,iconimage,plot='',fanart='',dur=0,genre='',year='',imd
         iconimage = infoLabels['cover_url']
         fanart = infoLabels['backdrop_url']
         plot = infoLabels['plot']
-    if not fanart: fanart=Dir+'fanart.jpg'
+    if not fanart: fanart=fanartimage
     if not iconimage: iconimage=art+'/vidicon.png'
     if not plot: plot='Sorry description not available'
     plot=plot.replace(",",'.')
@@ -1127,8 +1184,9 @@ def addDirX(name,url,mode,iconimage,plot='',fanart='',dur=0,genre='',year='',imd
     if menuItemPos != None:
         for mi in reversed(menuItems):
             Commands.insert(menuItemPos,mi)
+    
     liz=xbmcgui.ListItem(name, iconImage=art+'/vidicon.png', thumbnailImage=iconimage)
-    liz.addContextMenuItems( Commands, replaceItems=replaceItems )
+    liz.addContextMenuItems( Commands, replaceItems=False)
     liz.setInfo( type="Video", infoLabels=infoLabels )
     liz.setProperty('fanart_image', fanart)
     return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=isFolder)
@@ -1161,7 +1219,11 @@ def addDirL(name,url,mode,iconimage,plot,fanart,dur,genre,year):
     return addDirX(name,url,mode,iconimage,plot,fanart,dur,genre,year,fav_t='Live',fav_addon_t='Live')
 
 def addPlayL(name,url,mode,iconimage,plot,fanart,dur,genre,year,secName='',secIcon=''):
-    return addDirX(name,url,mode,iconimage,plot,fanart,dur,genre,year,isFolder=0,fav_t='Live',fav_addon_t='Live')
+    u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&iconimage="+urllib.quote_plus(iconimage)+"&plot="+urllib.quote_plus(plot)+"&fanart="+urllib.quote_plus(fanart)+"&genre="+urllib.quote_plus(genre)
+    surl=urllib.quote_plus(u)
+    dname=removeColoredText(name)
+    mi=[('Add to [COLOR=FFb151ef]Dixie[/COLOR]', 'XBMC.RunPlugin(%s?mode=1501&plot=%s&name=%s&url=%s&iconimage=%s)' % (sys.argv[0] ,secName,dname,surl, secIcon))]
+    return addDirX(name,url,mode,iconimage,plot,fanart,dur,genre,year,isFolder=0,fav_t='Live',fav_addon_t='Live',menuItemPos=2,menuItems=mi)
 
 def addPlayc(name,url,mode,iconimage,plot,fanart,dur,genre,year):
     return addDirX(name,url,mode,iconimage,plot,fanart,dur,genre,year,isFolder=0,addToFavs=0)
@@ -1178,7 +1240,7 @@ def addDirXml(name,url,mode,iconimage,plot,fanart,dur,genre,year):
         liz=xbmcgui.ListItem(name, iconImage=art+'/xmlplaylist.png', thumbnailImage=iconimage)
         liz.setInfo( type="Video", infoLabels={ "Title": name, "Plot": plot } )
         if fanart == '':
-            fanart=Dir+'fanart.jpg'
+            fanart=fanartimage
         liz.setProperty('fanart_image', fanart)
         if selfAddon.getSetting("addmethod") == "true":
             contextMenuItems.append(('[B][COLOR blue]Add[/COLOR][/B] Playlist','XBMC.RunPlugin(%s?name=None&mode=250&url=%s&iconimage=None)'% (sys.argv[0],urllib.quote_plus(plot))))
@@ -1201,7 +1263,7 @@ def addXmlFolder(name,url,mode,iconimage,plot,fanart,dur,genre,year):
         liz=xbmcgui.ListItem(name, iconImage=art+'/folder.png', thumbnailImage=iconimage)
         liz.setInfo( type="Video", infoLabels={ "Title": name, "Plot": plot } )
         if fanart == '':
-            fanart=Dir+'fanart.jpg'
+            fanart=fanartimage
         liz.setProperty('fanart_image', fanart)
         if selfAddon.getSetting("addmethod") == "true":
             contextMenuItems.append(('[B][COLOR blue]Add[/COLOR][/B] Playlist','XBMC.RunPlugin(%s?name=None&mode=250&url=%s&iconimage=None)'% (sys.argv[0],urllib.quote_plus(plot))))
@@ -1218,7 +1280,7 @@ def addXmlFolder(name,url,mode,iconimage,plot,fanart,dur,genre,year):
 def addLink(name,url,iconimage):
     liz=xbmcgui.ListItem(name, iconImage=art+'/link.png', thumbnailImage=iconimage)
     liz.setInfo( type="Video", infoLabels={ "Title": name } )
-    liz.setProperty('fanart_image', Dir+'fanart.jpg')
+    liz.setProperty('fanart_image', fanartimage)
     return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
 
 def addDir(name,url,mode,iconimage,plot=''):
@@ -1232,7 +1294,7 @@ def addDirFIX(name,url,mode,iconimage,location,path):
     u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&iconimage="+urllib.quote_plus(iconimage)+"&location="+urllib.quote_plus(location)+"&path="+urllib.quote_plus(path)
     liz=xbmcgui.ListItem(name, iconImage=art+'/vidicon.png', thumbnailImage=iconimage)
     liz.setInfo( type="Video", infoLabels={ "Title": name } )
-    liz.setProperty('fanart_image', Dir+'fanart.jpg')
+    liz.setProperty('fanart_image', fanartimage)
     contextMenuItems.append(('Watch History','XBMC.Container.Update(%s?name=None&mode=222&url=None&iconimage=None)'% (sys.argv[0])))
     contextMenuItems.append(("My Fav's",'XBMC.Container.Update(%s?name=None&mode=639&url=None&iconimage=None)'% (sys.argv[0])))
     liz.addContextMenuItems(contextMenuItems, replaceItems=False)
@@ -1269,7 +1331,7 @@ def addDLog(name,url,mode,iconimage,plot,fanart,dur,genre,year):
 
 def addSpecial(name,url,mode,iconimage):
     liz=xbmcgui.ListItem(name,iconImage="",thumbnailImage = iconimage)
-    liz.setProperty('fanart_image', Dir+'fanart.jpg')
+    liz.setProperty('fanart_image', fanartimage)
     u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=False)
 
@@ -1277,5 +1339,5 @@ def addSearchDir(name,url, mode,iconimage):
     #thumbnail = 'DefaultPlaylist.png'
     u         = sys.argv[0]+"?url="+urllib.quote_plus(url) + "?mode=" + str(mode)        
     liz       = xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
-    liz.setProperty('fanart_image', Dir+'fanart.jpg')
+    liz.setProperty('fanart_image', fanartimage)
     xbmcplugin.addDirectoryItem(handle = int(sys.argv[1]), url = u, listitem = liz, isFolder = False)

@@ -8,6 +8,7 @@ addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 art = main.art
 pattern = '(?sim)<a [^>]*?href="([^"]+?)" rel="bookmark"[^>]*?>\s*?<img src="([^"]+?)"[^>]*?title="([^"]+?)"'
+prettyName = 'MyNewVideoLinks'
     
 def LISTSP2(murl):
     if murl.startswith('3D'):
@@ -111,7 +112,20 @@ def SearchhistoryNEW(murl):
                 url='mNEW'
                 seahis=seahis.replace('%20',' ')
                 main.addDir(seahis,url,101,thumb)
-            
+
+def superSearch(encode,type):
+    try:
+        returnList=[]
+        surl='http://www.myvideolinks.eu/index.php?s='+encode
+        link=main.OPENURL(surl,verbose=False,mobile=True)
+        link=main.unescapes(link)
+        link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
+        match=re.compile(pattern).findall(link)
+        for url,thumb,name in match:
+            if re.findall('HDTV',name) and type=='TV' or type=='Movies' and not re.findall('HDTV',name):
+                returnList.append((name,prettyName,url,thumb,35,True))
+        return returnList
+    except: return []       
 
 def SEARCHNEW(mname,murl):
     if murl == 'movieNEW':
@@ -178,7 +192,7 @@ def LINKSP2(mname,url):
             name = name[0].upper() + name[1:]
             if main.supportedHost(name):
                 thumb=name.lower()
-                if re.search('billionuploads',murl) and filename: murl += '#@#' + filename
+#                 if re.search('billionuploads',murl) and filename: murl += '#@#' + filename
                 main.addDown2(mname+' [COLOR blue]'+name+'[/COLOR]',murl,209,art+'/hosts/'+thumb+".png",art+'/hosts/'+thumb+".png")
 
 def LINKSP2B(mname,murl):
@@ -207,14 +221,14 @@ def LINKSP2B(mname,murl):
         murl = parts[0]
         filename = parts[-1]
         stream_url = main.resolve_url(murl,filename)
-        infoL={'Title': infoLabels['title'], 'Plot': infoLabels['plot'], 'Genre': infoLabels['genre']}
+        infoL={'Title': infoLabels['title'], 'Plot': infoLabels['plot'], 'Genre': infoLabels['genre'], 'originaltitle': infoLabels['metaName']}
         if not video_type is 'episode': infoL['originalTitle']=main.removeColoredText(infoLabels['metaName']) 
         # play with bookmark
-        from universal import playbackengine
+        from resources.universal import playbackengine
         player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type=video_type, title=infoLabels['title'],season=season, episode=episode, year=str(infoLabels['year']),img=img,infolabels=infoL, watchedCallbackwithParams=main.WatchedCallbackwithParams,imdb_id=imdb_id)
         #WatchHistory
         if selfAddon.getSetting("whistory") == "true":
-            from universal import watchhistory
+            from resources.universal import watchhistory
             wh = watchhistory.WatchHistory(addon_id)
             wh.add_item(mname+' '+'[COLOR green]NewmyVideoLink[/COLOR]', sys.argv[0]+sys.argv[2], infolabels=infolabels, img=infoLabels['cover_url'], fanart=infoLabels['backdrop_url'], is_folder=False)
         player.KeepAlive()

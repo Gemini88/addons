@@ -7,7 +7,7 @@ from resources.libs import main
 #Mash Up - by Mash2k3 2012.
 
 from t0mm0.common.addon import Addon
-from universal import playbackengine, watchhistory
+from resources.universal import playbackengine, watchhistory
 addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 addon = Addon('plugin.video.movie25', sys.argv)
@@ -16,17 +16,17 @@ art = main.art
 wh = watchhistory.WatchHistory('plugin.video.movie25')
 
 def AtoZ():
-        main.addDir('#','http://www.animefreak.tv/book',629,art+'/wfs/09.png')
+        main.addDir('#','http://www.animefreak.tv/book',629,art+'/09.png')
         for i in string.ascii_uppercase:
-            main.addDir(i,'http://www.animefreak.tv/book',629,art+'/wfs/'+i+'.png')
+            main.addDir(i,'http://www.animefreak.tv/book',629,art+'/'+i.lower()+'.png')
         main.GA("Tvshows","A-ZTV")
         main.VIEWSB()
 
 def MAIN():
         main.GA("Plugin","AnimeFreak")
         main.addDir('Search','http://www.animefreak.tv',638,art+'/search.png')
-        main.addDir('A-Z','http://www.animefreak.tv',628,art+'/wfs/az.png')
-        main.addDir('Genre','http://www.animefreak.tv/browse',634,art+'/wfs/genre.png')
+        main.addDir('A-Z','http://www.animefreak.tv',628,art+'/AZ.png')
+        main.addDir('Genre','http://www.animefreak.tv/browse',634,art+'/genre.png')
         main.addDir('Popular Anime','http://www.animefreak.tv/watch/popular-animes',637,art+'/animefreak.png')
         main.addDir('Latest Episodes','http://www.animefreak.tv/tracker',632,art+'/animefreak.png')
         main.addDir('Latest Anime','http://www.animefreak.tv/latest',633,art+'/animefreak.png')

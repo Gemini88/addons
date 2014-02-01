@@ -9,7 +9,7 @@ addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 addon = Addon('plugin.video.movie25', sys.argv)
 art = main.art
-from universal import watchhistory
+from resources.universal import watchhistory
     
 wh = watchhistory.WatchHistory('plugin.video.movie25')
 
@@ -95,7 +95,7 @@ def iLiveList(murl):
                         match2=re.compile('sex').findall(name)
                         if len(match)==0 and len(match2)==0:
                                 if name != 'Playboy TV':
-                                        main.addPlayL(name,url,121,thumb,'','','','','')
+                                        main.addPlayL(name,url,121,thumb,'','','','','',secName='iLive',secIcon=art+'/ilive.png')
                 
                 loadedLinks = loadedLinks + 1
                 percent = (loadedLinks * 100)/totalLinks
@@ -146,11 +146,10 @@ def iLiveLink(mname,murl,thumb):
                 for playPath in playpath:
                     stream_url = 'rtmp://watch.ilive.to/edge playpath=' + playPath + " live=1 timeout=15 swfUrl=http://player.ilive.to/player_ilive_2.swf pageUrl="+pageUrl+" token="+token
                 listitem = xbmcgui.ListItem(thumbnailImage=thumb)
-                listitem.setInfo('video', {'Title': mname, 'Genre': 'Live'} )
-        
-                playlist.add(stream_url,listitem)
-                xbmcPlayer = xbmc.Player()
-                xbmcPlayer.play(playlist)
+                infoL={'Title': mname, 'Genre': 'Live'} 
+                from resources.universal import playbackengine
+                player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type='movie', title=mname,season='', episode='', year='',img=thumb,infolabels=infoL, watchedCallbackwithParams='',imdb_id='')
+
                 #WatchHistory
                 if selfAddon.getSetting("whistory") == "true":
                     wh.add_item(mname+' '+'[COLOR green]iLive[/COLOR]', sys.argv[0]+sys.argv[2], infolabels='', img=thumb, fanart='', is_folder=False)

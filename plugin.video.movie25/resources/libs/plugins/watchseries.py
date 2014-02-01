@@ -1,29 +1,24 @@
 # -*- coding: cp1252 -*-
-import urllib,urllib2,re,cookielib,string, urlparse,sys,os
-import xbmc, xbmcgui, xbmcaddon, xbmcplugin,urlresolver
-from t0mm0.common.net import Net as net
+import urllib,re,string,sys,os
+import xbmc,xbmcgui,xbmcaddon,xbmcplugin
 from resources.libs import main
 
 #Mash Up - by Mash2k3 2012.
 
-from t0mm0.common.addon import Addon
-from universal import playbackengine, watchhistory
 addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
-addon = Addon('plugin.video.movie25', sys.argv)
 art = main.art
-wh = watchhistory.WatchHistory('plugin.video.movie25')
-
+prettyName = 'WatchSeries'
 
 def MAINWATCHS():
-        main.addDir('Search','s',581,art+'/wfs/searchws.png')
-        main.addDir('A-Z','s',577,art+'/wfs/azws.png')
-        main.addDir('Yesterdays Episodes','http://watchseries.lt/tvschedule/-2',573,art+'/wfs/yesepi.png')
-        main.addDir('Todays Episodes','http://watchseries.lt/tvschedule/-1',573,art+'/wfs/toepi2.png')
-        main.addDir('Popular Shows','http://watchseries.lt/',580,art+'/wfs/popshowsws.png')
-        main.addDir('This Weeks Popular Episodes','http://watchseries.lt/new',573,art+'/wfs/thisweek.png')
-        main.addDir('Newest Episodes Added','http://watchseries.lt/latest',573,art+'/wfs/newadd.png')
-        main.addDir('By Genre','genre',583,art+'/wfs/genrews.png')
+        main.addDir('Search','s',581,art+'/search.png')
+        main.addDir('A-Z','s',577,art+'/az.png')
+        main.addDir('Yesterdays Episodes','http://watchseries.lt/tvschedule/-2',573,art+'/yesepi.png')
+        main.addDir('Todays Episodes','http://watchseries.lt/tvschedule/-1',573,art+'/toepi2.png')
+        main.addDir('Popular Shows','http://watchseries.lt/',580,art+'/popshowsws.png')
+        main.addDir('This Weeks Popular Episodes','http://watchseries.lt/new',573,art+'/thisweek.png')
+        main.addDir('Newest Episodes Added','http://watchseries.lt/latest',573,art+'/newadd.png')
+        main.addDir('By Genre','genre',583,art+'/genre.png')
         main.GA("Plugin","Watchseries")
         main.VIEWSB()
 
@@ -31,7 +26,7 @@ def POPULARWATCHS(murl):
         main.GA("Watchseries","PopularShows")
         link=main.OPENURL(murl)
         link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
-        match=re.compile('<span style=".+?">.+?;</span><a href="([^<]+)" title="watch online (.+?)">.+?</a><br/>').findall(link)
+        match=re.compile('<a href="([^<]+)" title="[^<]+">([^<]+)</a><br />').findall(link)
         main.addLink('[COLOR red]Most Popular Series[/COLOR]','',art+'/link.png')
         for url, name in match[0:12]:
             main.addDirT(name,'http://watchseries.lt'+url,578,'','','','','','')
@@ -50,32 +45,32 @@ def POPULARWATCHS(murl):
 
             
 def GENREWATCHS():
-        main.addDir('Action','http://watchseries.lt/genres/action',576,art+'/wfs/act.png')
-        main.addDir('Adventure','http://watchseries.lt/genres/adventure',576,art+'/wfs/adv.png')
-        main.addDir('Animation','http://watchseries.lt/genres/animation',576,art+'/wfs/ani.png')
-        main.addDir('Comedy','http://watchseries.lt/genres/comedy',576,art+'/wfs/com.png')
-        main.addDir('Crime','http://watchseries.lt/genres/crime',576,art+'/wfs/cri.png')
-        main.addDir('Documentary','http://watchseries.lt/genres/documentary',576,art+'/wfs/doc.png')
-        main.addDir('Drama','http://watchseries.lt/genres/drama',576,art+'/wfs/dra.png')
-        main.addDir('Family','http://watchseries.lt/genres/family',576,art+'/wfs/fam.png')
-        main.addDir('Fantasy','http://watchseries.lt/genres/fantasy',576,art+'/wfs/fan.png')
-        main.addDir('History','http://watchseries.lt/genres/history',576,art+'/wfs/his.png')
-        main.addDir('Horror','http://watchseries.lt/genres/horror',576,art+'/wfs/hor.png')
-        main.addDir('Music','http://watchseries.lt/genres/music',576,art+'/wfs/mus.png')
-        main.addDir('Mystery','http://watchseries.lt/genres/mystery',576,art+'/wfs/mys.png')
-        main.addDir('Reality','http://watchseries.lt/genres/reality-tv',576,art+'/wfs/rea.png')
-        main.addDir('Sci-Fi','http://watchseries.lt/genres/sci-fi',576,art+'/wfs/sci.png')
-        main.addDir('Sport','http://watchseries.lt/genres/sport',576,art+'/wfs/spo.png')
-        main.addDir('Talk Show','http://watchseries.lt/genres/talk-show',576,art+'/wfs/tals.png')
-        main.addDir('Thriller','http://watchseries.lt/genres/thriller',576,art+'/wfs/thr.png')
-        main.addDir('War','http://watchseries.lt/genres/war',576,art+'/wfs/war.png')
+        main.addDir('Action','http://watchseries.lt/genres/action',576,art+'/act.png')
+        main.addDir('Adventure','http://watchseries.lt/genres/adventure',576,art+'/adv.png')
+        main.addDir('Animation','http://watchseries.lt/genres/animation',576,art+'/ani.png')
+        main.addDir('Comedy','http://watchseries.lt/genres/comedy',576,art+'/com.png')
+        main.addDir('Crime','http://watchseries.lt/genres/crime',576,art+'/cri.png')
+        main.addDir('Documentary','http://watchseries.lt/genres/documentary',576,art+'/doc.png')
+        main.addDir('Drama','http://watchseries.lt/genres/drama',576,art+'/dra.png')
+        main.addDir('Family','http://watchseries.lt/genres/family',576,art+'/fam.png')
+        main.addDir('Fantasy','http://watchseries.lt/genres/fantasy',576,art+'/fant.png')
+        main.addDir('History','http://watchseries.lt/genres/history',576,art+'/his.png')
+        main.addDir('Horror','http://watchseries.lt/genres/horror',576,art+'/hor.png')
+        main.addDir('Music','http://watchseries.lt/genres/music',576,art+'/mus.png')
+        main.addDir('Mystery','http://watchseries.lt/genres/mystery',576,art+'/mys.png')
+        main.addDir('Reality','http://watchseries.lt/genres/reality-tv',576,art+'/rea.png')
+        main.addDir('Sci-Fi','http://watchseries.lt/genres/sci-fi',576,art+'/sci.png')
+        main.addDir('Sport','http://watchseries.lt/genres/sport',576,art+'/spo.png')
+        main.addDir('Talk Show','http://watchseries.lt/genres/talk-show',576,art+'/tals.png')
+        main.addDir('Thriller','http://watchseries.lt/genres/thriller',576,art+'/thr.png')
+        main.addDir('War','http://watchseries.lt/genres/war',576,art+'/war.png')
         main.GA("Watchseries","Genre")
         main.VIEWSB()
 
 def AtoZWATCHS():
-    main.addDir('0-9','http://watchseries.lt/letters/09',576,art+'/wfs/09.png')
+    main.addDir('0-9','http://watchseries.lt/letters/09',576,art+'/09.png')
     for i in string.ascii_uppercase:
-            main.addDir(i,'http://watchseries.lt/letters/'+i.lower()+'/list-type/a_z',576,art+'/wfs/'+i+'.png')
+            main.addDir(i,'http://watchseries.lt/letters/'+i.lower()+'/list-type/a_z',576,art+'/'+i.lower()+'.png')
     main.GA("Watchseries","A-Z")
     main.VIEWSB()
 
@@ -166,10 +161,9 @@ def SearchhistoryWS():
         seapath=os.path.join(main.datapath,'Search')
         SeaFile=os.path.join(seapath,'SearchHistoryTv')
         if not os.path.exists(SeaFile):
-            url='ws'
-            SEARCHWS(url)
+            SEARCHWS()
         else:
-            main.addDir('Search','ws',582,art+'/search.png')
+            main.addDir('Search','###',582,art+'/search.png')
             main.addDir('Clear History',SeaFile,128,art+'/cleahis.png')
             thumb=art+'/link.png'
             searchis=re.compile('search="(.+?)",').findall(open(SeaFile,'r').read())
@@ -177,52 +171,30 @@ def SearchhistoryWS():
                     url=seahis
                     seahis=seahis.replace('%20',' ')
                     main.addDir(seahis,url,582,thumb)
+
+def superSearch(encode,type):
+    try:
+        returnList=[]
+        surl='http://watchseries.lt/search/'+encode
+        link=main.OPENURL(surl,verbose=False)
+        link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
+        match=re.compile('<a title=".+?" href="([^<]+)"><b>(.+?)</b></a>                <br>                <b>Description:</b>(.+?)</td></tr>            <tr></tr>            <tr><td valign="top">                <a title=".+?<img src="(.+?)">               </a>',re.DOTALL).findall(link)
+        for url,name,desc,thumb in match:
+            url = 'http://watchseries.lt'+url
+            returnList.append((name,prettyName,url,thumb,578,True))
+        return returnList
+    except: return []
             
-            
-
-
-def SEARCHWS(murl):
-        seapath=os.path.join(main.datapath,'Search')
-        SeaFile=os.path.join(seapath,'SearchHistoryTv')
-        try:
-            os.makedirs(seapath)
-        except:
-            pass
-        if murl == 'ws':
-            keyb = xbmc.Keyboard('', 'Search For Shows or Episodes')
-            keyb.doModal()
-            if (keyb.isConfirmed()):
-                    search = keyb.getText()
-                    encode=urllib.quote(search)
-                    surl='http://watchseries.lt/search/'+encode
-                    if not os.path.exists(SeaFile) and encode != '':
-                        open(SeaFile,'w').write('search="%s",'%encode)
-                    else:
-                        if encode != '':
-                            open(SeaFile,'a').write('search="%s",'%encode)
-                    searchis=re.compile('search="(.+?)",').findall(open(SeaFile,'r').read())
-                    for seahis in reversed(searchis):
-                        continue
-                    if len(searchis)>=10:
-                        searchis.remove(searchis[0])
-                        os.remove(SeaFile)
-                        for seahis in searchis:
-                            try:
-                                open(SeaFile,'a').write('search="%s",'%seahis)
-                            except:
-                                pass
-
-
-        else:
-            encode = murl
-            surl='http://watchseries.lt/search/'+encode
+def SEARCHWS(murl = ''):
+        encode = main.updateSearchFile(murl,'TV')
+        if not encode: return False   
+        surl='http://watchseries.lt/search/'+encode
         link=main.OPENURL(surl)
         link=link.replace('\r','').replace('\n','').replace('\t','')
-        match=re.compile('</a></td><td valign=".+?">    <a title="watch serie (.+?)" href="(.+?)">').findall(link)
-        for name,url in match:
-                main.addDirT(name,'http://watchseries.lt'+url,578,'','','','','','')
+        match=re.compile('<a title=".+?" href="([^<]+)"><b>(.+?)</b></a>                <br>                <b>Description:</b>(.+?)</td></tr>            <tr></tr>            <tr><td valign="top">                <a title=".+?<img src="(.+?)">               </a>',re.DOTALL).findall(link)
+        for url,name,desc,thumb in match:
+                main.addDirT(name,'http://watchseries.lt'+url,578,thumb,desc,'','','','')
         main.GA("Watchseries","Search")
-
 
 def LISTHOST(name,murl):
         link=main.OPENURL(murl)
@@ -336,9 +308,9 @@ def LINKWATCHS(mname,murl):
         playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         playlist.clear()
         match=re.compile('(.+?)xocx(.+?)xocx').findall(murl)
+        xbmc.executebuiltin("XBMC.Notification(Please Wait!,Checking Link,3000)")
         for hurl, durl in match:
                 furl=geturl('http://watchseries.lt'+hurl)
-        xbmc.executebuiltin("XBMC.Notification(Please Wait!,Checking Link,1500)")
         link=main.OPENURL(durl)
         link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
         match2=re.compile('<h1 class=".+?"><a href=".+?">.+?</a> - <a href="(.+?)" title=".+?">.+?</a>').findall(link)
@@ -374,9 +346,12 @@ def LINKWATCHS(mname,murl):
 
                 infoL={'Title': infoLabels['title'], 'Plot': infoLabels['plot'], 'Genre': infoLabels['genre']}
                 # play with bookmark
+                from resources.universal import playbackengine
                 player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type=video_type, title=str(infoLabels['title']),season=str(season), episode=str(episode), year=str(infoLabels['year']),img=img,infolabels=infoL, watchedCallbackwithParams=main.WatchedCallbackwithParams,imdb_id=imdb_id)
                 #WatchHistory
                 if selfAddon.getSetting("whistory") == "true":
+                    from resources.universal import watchhistory
+                    wh = watchhistory.WatchHistory('plugin.video.movie25')
                     wh.add_item(mname+' '+'[COLOR green]WatchSeries[/COLOR]', sys.argv[0]+sys.argv[2], infolabels='', img=thumb, fanart='', is_folder=False)
                 player.KeepAlive()
                 return ok

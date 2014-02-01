@@ -5,7 +5,7 @@ import main
 #Mash Up - by Mash2k3 2012.
 
 from t0mm0.common.addon import Addon
-from universal import playbackengine, watchhistory
+from resources.universal import playbackengine, watchhistory
 addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 addon = Addon('plugin.video.movie25', sys.argv)
@@ -19,12 +19,13 @@ def YOUList(mname,durl):
         else:
                 murl='https://gdata.youtube.com/feeds/api/playlists/'+durl+'?start-index=1&max-results=50'
         link=main.OPENURL(murl)
-        match=re.compile("href='https://m.youtube.com/details.?v=(.+?)'/.+?<media\:descriptio[^>]+>([^<]+)</media\:description>.+?<media\:thumbnail url='([^']+)'.+?<media:title type='plain'>(.+?)/media:title>").findall(link)
-        for url,desc,thumb,name in match:
+        match=re.compile("href='https://m.youtube.com/details.?v=(.+?)'/.+?<media\:descriptio[^>]+>([^<]+)</media\:description>.+?<media\:thumbnail url='([^']+)'.+?<media:title type='plain'>(.+?)/media:title>",re.DOTALL).findall(link)
+        for url,desc,thumb,name in reversed(match):
                 name=name.replace('<','')
                 main.addPlayMs(name,url,206,thumb,desc,'','','','')
         match2=re.compile("<title type=\'text\'>.+?</title><link rel=\'alternate\' type=\'text/html\' href=\'https://www.youtube.com/watch.?v=(.+?)&feature=youtube_gdata\'/>.+?<media:title type=\'plain\'>(.+?)</media:title>").findall(link)
-        for url,name in match2:
+        
+        for url,name in reversed(match2):
                 name=name.replace('<','')
                 main.addPlayMs(name,url,206,'','','','','','')
         tot=len(match)+len(match2)

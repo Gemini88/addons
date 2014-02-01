@@ -26,10 +26,10 @@ def CATEGORIES():
     
 def CATEGORIES2():
     link=OPEN_URL('http://livefootballvideo.com/fullmatch')
-    r='rel="bookmark".+?img src="(.+?)".+?<a href="(.+?)" title=".+?">(.+?)</a></h2><p class="postmetadata longdate" rel=".+?">(.+?)/(.+?)/(.+?)</p>'
+    r='<div class="cover"><a href="(.+?)" rel="bookmark" title="(.+?)">.+?<img src="(.+?)".+?<p class="postmetadata longdate" rel=".+?">(.+?)/(.+?)/(.+?)</p>'
     match=re.compile(r,re.DOTALL).findall(link)
     print match
-    for iconimage,url,name,month,day,year in match:
+    for url,name,iconimage,month,day,year in match:
         _date='%s/%s/%s'%(day,month,year)  
         _name='%s-[COLOR yellow][%s][/COLOR]'%(name,_date)    
         addDir(_name,url,1,iconimage,'')
@@ -40,15 +40,15 @@ def CATEGORIES2():
 def NEXTPAGE(page):
     pagenum=int(page) +1
     link=OPEN_URL('http://livefootballvideo.com/fullmatch/page/'+str(pagenum))
-    r='rel="bookmark".+?img src="(.+?)".+?<a href="(.+?)" title=".+?">(.+?)</a></h2><p class="postmetadata longdate" rel=".+?">(.+?)/(.+?)/(.+?)</p>'
+    r='<div class="cover"><a href="(.+?)" rel="bookmark" title="(.+?)">.+?<img src="(.+?)".+?<p class="postmetadata longdate" rel=".+?">(.+?)/(.+?)/(.+?)</p>'
     match=re.compile(r,re.DOTALL).findall(link)
     print match
-    for iconimage,url,name,month,day,year in match:
+    for url,name,iconimage,month,day,year in match:
         _date='%s/%s/%s'%(day,month,year)  
         _name='%s-[COLOR yellow][%s][/COLOR]'%(name,_date)    
         addDir(_name,url,1,iconimage,'')
-    addDir('Next Page >>','url',2,'',pagenum)
-    setView('movies', 'default') 
+    addDir('Next Page >>','url',2,'','1')
+    setView('movies', 'main') 
                       												  
 def GETLINKS(name,url):#  cause mode is empty in this one it will go back to first directory
     link=OPEN_URL(url)
@@ -90,11 +90,11 @@ def GETLINKS(name,url):#  cause mode is empty in this one it will go back to fir
         
 def HIGHLIGHTS():
     link=OPEN_URL('http://livefootballvideo.com/highlights')
-    r= 'team home column">(.+?)&nbsp;.+?src="(.+?)"></div>.+?&nbsp;(.+?)</div>.+?"column"><a href="(.+?)"'
+    r= '<div class="team home column">(.+?)&nbsp;.+?.+?<a href="(.+?)" class="score">(.+?)</a></div>.+?</noscript>&nbsp;(.+?)</div>'
     match = re.compile ( r , re.DOTALL).findall (link)
-    for team_a , image , team_b , url in match :
-        name = '%s vs %s' % ( team_a , team_b )
-        iconimage = 'http://livefootballvideo.com%s' % image
+    for team_a ,url,score,  team_b  in match :
+        name = '%s vs %s [COLOR yellow]%s[/COLOR]' % ( team_a , team_b,score )
+        iconimage = 'http://livefootballvideo.com'
         addDir(name,url,7,iconimage,'')
     addDir('Next Page >>' , 'url' , 6 , '' , '1' )
     setView('movies', 'default') 
@@ -102,13 +102,13 @@ def HIGHLIGHTS():
 def HIGHLIGHTS_NEXTPAGE( page ) :
     page_num =int ( page ) + 1
     link=OPEN_URL( 'http://livefootballvideo.com/highlights/page/' + str ( page_num ) )
-    r= 'team home column">(.+?)&nbsp;.+?src="(.+?)"></div>.+?&nbsp;(.+?)</div>.+?"column"><a href="(.+?)"'
+    r= '<div class="team home column">(.+?)&nbsp;.+?.+?<a href="(.+?)" class="score">(.+?)</a></div>.+?</noscript>&nbsp;(.+?)</div>'
     match = re.compile ( r , re.DOTALL).findall (link)
-    for team_a , image , team_b , url in match :
-        name = '%s vs %s' % ( team_a , team_b )
-        iconimage = 'http://livefootballvideo.com%s' % image
+    for team_a ,url,score,  team_b  in match :
+        name = '%s vs %s [COLOR yellow]%s[/COLOR]' % ( team_a , team_b,score )
+        iconimage = 'http://livefootballvideo.com'
         addDir(name,url,7,iconimage,'')
-    addDir('Next Page >>' , 'url' , 6 , '' , page_num )
+    addDir('Next Page >>' , 'url' , 6 , '' , '1' )
     setView('movies', 'default') 
     
     

@@ -1,48 +1,53 @@
 # -*- coding: cp1252 -*-
-import urllib,urllib2,re,cookielib,string, urlparse,sys,os
-import xbmc, xbmcgui, xbmcaddon, xbmcplugin,urlresolver
-from t0mm0.common.net import Net
-net = Net()
+import urllib,re,string, urlparse,sys,os
+import xbmc, xbmcgui, xbmcaddon, xbmcplugin
 from resources.libs import main
 
 #Mash Up - by Mash2k3 2012.
 
-from t0mm0.common.addon import Addon
-from universal import playbackengine, watchhistory
 addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
-addon = Addon('plugin.video.movie25', sys.argv)
 art = main.art
+prettyName = 'FMA'
     
-wh = watchhistory.WatchHistory('plugin.video.movie25')
-
-
 def MAINFMA():
-        main.GA("Plugin","FMA")
-        main.addDir('Search','http://www.fma.com',646,art+'/wfs/search.png')
-        main.addDir('All Movies','movies',570,art+'/wfs/az.png')
-        main.addDir('Latest','http://www.freemoviesaddict.com/',568,art+'/wfs/latest2.png')
-        main.addDir('Genre','genre',571,art+'/wfs/genre.png')
-        main.addDir('Year','year',571,art+'/wfs/year.png')
+    main.GA("Plugin","FMA")
+    main.addDir('Search','http://www.fma.com',646,art+'/search.png')
+    main.addDir('All Movies','movies',570,art+'/az.png')
+    main.addDir('Latest','http://www.freemoviesaddict.com/',568,art+'/latest.png')
+    main.addDir('Genre','genre',571,art+'/genre.png')
+    main.addDir('Year','year',571,art+'/year.png')
 
 def SearchhistoryM():
-        seapath=os.path.join(main.datapath,'Search')
-        SeaFile=os.path.join(seapath,'SearchHistory25')
-        if not os.path.exists(SeaFile):
-            url='ws'
-            SEARCHM(url)
-        else:
-            main.addDir('Search','ws',647,art+'/search.png')
-            main.addDir('Clear History',SeaFile,128,art+'/cleahis.png')
-            thumb=art+'/link.png'
-            searchis=re.compile('search="(.+?)",').findall(open(SeaFile,'r').read())
-            for seahis in reversed(searchis):
-                    url=seahis
-                    seahis=seahis.replace('%20',' ')
-                    main.addDir(seahis,url,647,thumb)
+    seapath=os.path.join(main.datapath,'Search')
+    SeaFile=os.path.join(seapath,'SearchHistory25')
+    if not os.path.exists(SeaFile):
+        url='ws'
+        SEARCHM(url)
+    else:
+        main.addDir('Search','ws',647,art+'/search.png')
+        main.addDir('Clear History',SeaFile,128,art+'/cleahis.png')
+        thumb=art+'/link.png'
+        searchis=re.compile('search="(.+?)",').findall(open(SeaFile,'r').read())
+        for seahis in reversed(searchis):
+            url=seahis
+            seahis=seahis.replace('%20',' ')
+            main.addDir(seahis,url,647,thumb)
             
-            
-
+def superSearch(encode,type):
+    try:
+        from t0mm0.common.net import Net
+        net = Net()
+        returnList=[]
+        search_url = 'http://www.freemoviesaddict.com/search'
+        search_content = net.http_POST(search_url, { 'search_term' : encode} ).content
+        r=main.unescapes(search_content)
+        match=re.compile('<img class=\'.+?\' src=\'(.+?)\' alt=\'.+?\' />.+?<a class=\'.+?\' href=\'/(.+?)\'>(.+?)</a>.+?<a href=\'/movies/year/.+?\'>(.+?)</a>.+?<a href=\'/movies/genre/.+?\'>(.+?)</a>.+?</span><span class=".+?">(.+?)</span>').findall(r)
+        for thumb,url,name, year, gen, desc in match:
+            url='http://www.freemoviesaddict.com/'+url
+            returnList.append((name,prettyName,url,thumb,569,True))
+        return returnList
+    except: return []
 
 def SEARCHM(murl):
         seapath=os.path.join(main.datapath,'Search')
@@ -77,6 +82,8 @@ def SEARCHM(murl):
 
         else:
             encode = murl
+        from t0mm0.common.net import Net
+        net = Net()
         search_url = 'http://www.freemoviesaddict.com/search'
         search_content = net.http_POST(search_url, { 'search_term' : encode} ).content
         r=main.unescapes(search_content)
@@ -100,9 +107,9 @@ def SEARCHM(murl):
         main.GA("FMA","Search")
 
 def AtoZFMA():
-        main.addDir('0-9','http://www.freemoviesaddict.com/movies/letter/123',568,art+'/wfs/09.png')
+        main.addDir('0-9','http://www.freemoviesaddict.com/movies/letter/123',568,art+'/09.png')
         for i in string.ascii_uppercase:
-                main.addDir(i,'http://www.freemoviesaddict.com/movies/letter/'+i,568,art+'/wfs/'+i+'.png')
+                main.addDir(i,'http://www.freemoviesaddict.com/movies/letter/'+i,568,art+'/'+i.lower()+'.png')
         main.GA("FMA","A-Z")
         main.VIEWSB()
 
@@ -170,6 +177,7 @@ def LINKFMA(mname,murl,thumb,desc):
         link=main.OPENURL(murl)
         link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
         match=re.compile('<span class=\'.+?\'>(.+?)</span></p><div class=\'.+?\'><img src=\'.+?\' /></div><a class=\'.+?\' href="(.+?)"').findall(link)
+        import urlresolver
         for host, url in match:
                 durl='http://www.freemoviesaddict.com/'+url
                 redirect=main.REDIRECT(durl)
@@ -178,10 +186,11 @@ def LINKFMA(mname,murl,thumb,desc):
                 
         if (len(sources)==0):
                 xbmc.executebuiltin("XBMC.Notification(Sorry!,Show doesn't have playable links,5000)")
-      
+                  
         else:
                 source = urlresolver.choose_source(sources)
-        try:
+        if source != False:
+            try:
                 xbmc.executebuiltin("XBMC.Notification(Please Wait!,Resolving Link,3000)")
                 stream_url = main.resolve_url(source.get_url())
                 if(stream_url == False):
@@ -189,13 +198,18 @@ def LINKFMA(mname,murl,thumb,desc):
                 
                 infoL={'Title': infoLabels['title'], 'Plot': infoLabels['plot'], 'Genre': infoLabels['genre']}
                 # play with bookmark
+                from resources.universal import playbackengine
                 player = playbackengine.PlayWithoutQueueSupport(resolved_url=stream_url, addon_id=addon_id, video_type=video_type, title=str(infoLabels['title']),season=str(season), episode=str(episode), year=str(infoLabels['year']),img=img,infolabels=infoL, watchedCallbackwithParams=main.WatchedCallbackwithParams,imdb_id=imdb_id)
                 #WatchHistory
                 if selfAddon.getSetting("whistory") == "true":
+                    from resources.universal import watchhistory
+                    wh = watchhistory.WatchHistory(addon_id)
                     wh.add_item(mname+' '+'[COLOR green]FMA[/COLOR]', sys.argv[0]+sys.argv[2], infolabels=infolabels, img=img, fanart=fanart, is_folder=False)
                 player.KeepAlive()
                 return ok
-        except Exception, e:
+            except Exception, e:
                 if stream_url != False:
                         main.ErrorReport(e)
                 return ok
+        else:
+            return ok

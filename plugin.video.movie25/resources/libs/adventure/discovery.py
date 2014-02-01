@@ -5,7 +5,7 @@ from resources.libs import main
 #Mash Up - by Mash2k3 2012.
 
 from t0mm0.common.addon import Addon
-from universal import playbackengine, watchhistory
+from resources.universal import playbackengine, watchhistory
 addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 addon = Addon('plugin.video.movie25', sys.argv)
@@ -117,7 +117,7 @@ def LISTDISC(mname,murl):
         main.GA("Discovery",mname+"-list")
 
 def LINKDISC(name,url):
-        from universal import playbackengine
+        from resources.universal import playbackengine
         idlist1=[]
         idlist2=[]
         idlist3=[]

@@ -5,7 +5,7 @@ from resources.libs import main
 #Mash Up - by Mash2k3 2012.
 
 from t0mm0.common.addon import Addon
-from universal import playbackengine, watchhistory
+from resources.universal import playbackengine, watchhistory
 addon_id = 'plugin.video.movie25'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 addon = Addon('plugin.video.movie25', sys.argv)
@@ -73,9 +73,9 @@ def LINK(mname,murl,thumb):
                                     desc=''
                             vid=match[2]+'.mp4'
                     except:
-                            match = re.findall('<video src="(.+?)" title=.+?abstract="(.+?)"',link3)
+                            match = re.findall('<video src="(.+?).mp4".+?title=.+?abstract="(.+?)"',link3)
                             for vurl,desc in match:
-                                    vid=vurl
+                                    vid=vurl+'.mp4'
                     stream_url=vid
                     infoL={ "Title": mname, "Plot": desc}
                     # play with bookmark

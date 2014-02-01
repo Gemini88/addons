@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon version="1.8" id="repository.Coolwave" name="Coolwave REPO" provider-name="[COLOR blue]Coolwave[/COLOR]">
+<addon version="2.0" id="repository.Coolwave" name="[COLOR blue]C[/COLOR]oolwave REPO" provider-name="[COLOR blue]C[/COLOR]oolwave">
 	<extension point="xbmc.addon.repository" name="Coolwave's Addon Repository">
 		<info compressed="false">http://github.com/Coolwave/repository.Coolwave/raw/master/addons.xml</info>
 		<checksum>http://github.com/Coolwave/repository.Coolwave/raw/master/addons.xml.md5</checksum>
@@ -7,7 +7,7 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary>Install [COLOR blue]Coolwave[/COLOR]'s Addons</summary>
-		<description>Download and install addons from Coolwave</description>
+		<description>Download and install Coolwave's addons....... For Official !! Support Visit [COLOR blue]X[/COLOR]UNITYTALK.COM</description>
 		<platform>all</platform>
 	</extension>
 </addon>
